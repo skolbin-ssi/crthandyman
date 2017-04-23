@@ -1,5 +1,9 @@
-﻿using System;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using CommerceRuntimeHandyman.Types;
 using HandymanTests.TestHelpers;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HandymanTests
@@ -19,7 +23,18 @@ namespace HandymanTests
                 }
             }";
 
-            var compilation = RoslynHelper.ParseWithBaseTypes(code);
+            SyntaxTree tree;
+            var compilation = RoslynHelper.Compile(code, out tree);
+            var semanticModel = compilation.GetSemanticModel(tree);
+
+            var methodDeclaration = tree.GetRoot()
+                .DescendantNodes()
+                .OfType<MethodDeclarationSyntax>()
+                .First();
+
+            var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
+
+            Assert.IsNotNull(RequestHandlerImplementation.TryParse(methodSymbol));
         }
     }
 }

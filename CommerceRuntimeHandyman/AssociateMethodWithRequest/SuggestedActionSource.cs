@@ -28,7 +28,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
             if (symbol != null)
             {
-                yield return new SuggestedActionSet(new[] { new SuggestedAction(symbol.Identifier.ValueText) });
+                yield return new SuggestedActionSet(new[] { new SuggestedAction(symbol.Name) });
             }
         }
 
@@ -43,7 +43,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
             return true;
         }
 
-        private async Task<MethodDeclarationSyntax> TryGetMethodDefinition(SnapshotSpan range, CancellationToken cancellationToken)
+        private async Task<IMethodSymbol> TryGetMethodDefinition(SnapshotSpan range, CancellationToken cancellationToken)
         {
             var document = range.Snapshot.TextBuffer.GetRelatedDocuments().FirstOrDefault();
 
@@ -58,7 +58,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
                     Type nodeType = node.GetType();
                     if (nodeType == typeof(MethodDeclarationSyntax))
                     {
-                        return (MethodDeclarationSyntax)node;
+                        return (IMethodSymbol)semanticModel.GetDeclaredSymbol(node);
                     }
                     else if (nodeType == typeof(BlockSyntax))
                     {

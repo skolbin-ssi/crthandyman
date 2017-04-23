@@ -13,7 +13,7 @@ namespace CommerceRuntimeHandyman.Types
     /// </summary>
     public class RequestHandlerImplementation
     {
-        public RequestHandlerImplementation(RequestType requestType, ResponseType responseType, ClassDeclarationSyntax requestHandlerClassDeclartion)
+        public RequestHandlerImplementation(RequestType requestType, ResponseType responseType, ISymbol requestHandlerClass)
         {
             this.RequestType = requestType;
             this.ResponseType = responseType;
@@ -23,23 +23,22 @@ namespace CommerceRuntimeHandyman.Types
 
         public ResponseType ResponseType { get; private set; }
 
-        public static async Task<RequestHandlerImplementation> TryParse(MethodDeclarationSyntax methodDeclarationSyntax)
+        public static RequestHandlerImplementation TryParse(IMethodSymbol method)
         {
-            // ResponseType MethodName RequestType
-            var responseSyntaxType = methodDeclarationSyntax.ReturnType;
-            var requestSyntaxType = methodDeclarationSyntax.ParameterList.Parameters.FirstOrDefault()?.Type;
-
-            var typeManager = TypeManager.Instance;
-
-            var responseType = await typeManager.TryResolveResponseType(responseSyntaxType);
-            var requestType = await typeManager.TryResolveRequestType(responseSyntaxType);
-
-            if (requestType != null && requestType != null)
+            if (method.ContainingSymbol != null)
             {
-                var classDeclaration = methodDeclarationSyntax.FirstAncestorOrSelf<ClassDeclarationSyntax>();
-                if (classDeclaration != null)
+                // ResponseType MethodName RequestType
+                var returnType = method.ReturnType;
+                var parameterType = method.Parameters.FirstOrDefault()?.Type;
+
+                var typeResolver = TypeResolver.Instance;
+
+                var responseType = typeResolver.TryResolveResponseType(returnType);
+                var requestType = typeResolver.TryResolveRequestType(parameterType);
+
+                if (responseType != null && requestType != null)
                 {
-                    return new RequestHandlerImplementation(requestType, responseType, classDeclaration);
+                    return new RequestHandlerImplementation(requestType, responseType, method.ContainingSymbol);
                 }
             }
 

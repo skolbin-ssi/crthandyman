@@ -23,16 +23,29 @@ namespace HandymanTests.TestHelpers
                 MetadataReference.CreateFromFile(string.Format(RuntimePath, "System.Core"))
             };
 
-        public static Compilation ParseWithBaseTypes(string code)
-        {
-            var trees = BaseTypesSyntaxTree.Concat(new[] { ParseText(code) }).ToArray();
+        private static readonly CSharpCompilationOptions DefaultCompilationOptions =
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+                    .WithOverflowChecks(true).WithOptimizationLevel(OptimizationLevel.Debug);
 
-            return CSharpCompilation.Create("test", trees);
+        public static Compilation Compile(string code, out SyntaxTree codeSyntaxTree)
+        {
+            codeSyntaxTree = ParseText(code);
+            var trees = BaseTypesSyntaxTree.Concat(new[] { codeSyntaxTree }).ToArray();
+            var compilation = CSharpCompilation.Create("test", trees, DefaultReferences, DefaultCompilationOptions);
+
+            var errors = compilation.GetDiagnostics();
+
+            if (errors.Any())
+            {
+                throw new ArgumentException($"Compilation errors: {errors}");
+            }
+
+            return compilation;
         }
 
         private static SyntaxTree[] ParseBaseTypes()
         {
-            string cd = Directory.GetCurrentDirectory();
+            string cd = Path.Combine(Directory.GetCurrentDirectory(), "BaseTypes");
             List<SyntaxTree> trees = new List<SyntaxTree>();
 
             foreach (string path in Directory.GetFiles(cd, "*.cs"))
