@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using CommerceRuntimeHandyman.Types;
-using HandymanTests.TestHelpers;
+using Handyman.Tests.TestHelpers;
+using Handyman.Types;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace HandymanTests
+namespace Handyman.Tests
 {
     [TestClass]
     public class RequestHandlerImplementationTests

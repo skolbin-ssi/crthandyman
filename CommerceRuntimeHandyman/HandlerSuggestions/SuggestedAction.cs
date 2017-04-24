@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Handyman.Types;
 using Microsoft.VisualStudio.Imaging.Interop;
 using Microsoft.VisualStudio.Language.Intellisense;
 
@@ -11,7 +12,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
     {
         public bool HasActionSets => false;
 
-        public string DisplayText { get; set; }
+        public string DisplayText => "Transform into request handler";
 
         public object IconMoniker => "IconMoniker";
 
@@ -23,9 +24,11 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
         ImageMoniker ISuggestedAction.IconMoniker => default(ImageMoniker);
 
-        public SuggestedAction(string methodName)
+        private RequestHandlerImplementation requestHandler;
+
+        public SuggestedAction(RequestHandlerImplementation requestHandler)
         {
-            this.DisplayText = $"I found {methodName}";
+            this.requestHandler = requestHandler;
         }
 
         public void Dispose()
@@ -44,6 +47,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
         public void Invoke(CancellationToken cancellationToken)
         {
+
         }
 
         public bool TryGetTelemetryId(out Guid telemetryId)

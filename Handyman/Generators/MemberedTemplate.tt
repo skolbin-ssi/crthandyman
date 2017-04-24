@@ -1,0 +1,23 @@
+﻿<#@ template language="C#" #>
+public class <#= m.Name #> : <#= m.BaseClassName #>
+{
+    /// <summary>
+    /// TODO
+    /// </summary>
+<# foreach (var member in m.Members) { #>
+    /// <param name="<#= member.Name #>"></param>
+<# } #>
+    public <#= m.Name #>(<# string.Join(",", this.GetTypedMember()); #>)
+    {
+<# foreach (var member in m.Members) { #>
+        this.<#= member.Name #> = <#= this.ToCamelCase(member.Name) #>;
+<# } #>
+    }
+
+    /// <summary>
+    /// Gets or sets TODO.
+    /// </summary>
+<# foreach (var member in m.Members) { #>
+    public <#= member.Type.Name #> <#= member.Name #> { get; private set; }
+<# } #>
+}

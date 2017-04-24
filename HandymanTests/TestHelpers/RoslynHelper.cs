@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace HandymanTests.TestHelpers
+namespace Handyman.Tests.TestHelpers
 {
     public class RoslynHelper
     {
@@ -27,6 +27,12 @@ namespace HandymanTests.TestHelpers
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                     .WithOverflowChecks(true).WithOptimizationLevel(OptimizationLevel.Debug);
 
+        public static Compilation Compile(string code)
+        {
+            SyntaxTree s;
+            return Compile(code, out s);
+        }
+
         public static Compilation Compile(string code, out SyntaxTree codeSyntaxTree)
         {
             codeSyntaxTree = ParseText(code);
@@ -37,7 +43,7 @@ namespace HandymanTests.TestHelpers
 
             if (errors.Any())
             {
-                throw new ArgumentException($"Compilation errors: {errors}");
+                throw new ArgumentException($"Compilation errors: { string.Join("\n", errors.Select(e => e.GetMessage())) }");
             }
 
             return compilation;

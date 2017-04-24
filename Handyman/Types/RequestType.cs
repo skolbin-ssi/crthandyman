@@ -4,21 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CommerceRuntimeHandyman.Types
+namespace Handyman.Types
 {
     /// <summary>
     /// Represents the a request type.
     /// </summary>
-    public class RequestType
+    public class RequestType : MemberedBaseType
     {
-        public RequestType(ITypeSymbol symbol)
+        public RequestType(string name, IEnumerable<Member> members)
+            : base(name, "IRequest", members)
         {
-            this.Symbol = symbol;
         }
-
-        public ITypeSymbol Symbol { get; private set; }
-
-        public string Name { get { return this.Symbol.Name; } }
     }
 }

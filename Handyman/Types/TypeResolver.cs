@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CommerceRuntimeHandyman.Types
+namespace Handyman.Types
 {
     public class TypeResolver
     {
@@ -26,10 +26,11 @@ namespace CommerceRuntimeHandyman.Types
         /// <returns>The request type.</returns>
         public RequestType TryResolveRequestType(ITypeSymbol type)
         {
-            if (ImplementsInterface(type, "IRequest"))
-            {
-                return new RequestType(type);
-            }
+            //if (ImplementsInterface(type, "IRequest"))
+            //{
+            //    var classDeclaration = this.GetClassDeclaration(type);
+            //    return new RequestType(classDeclaration);
+            //}
 
             return null;
         }
@@ -41,12 +42,17 @@ namespace CommerceRuntimeHandyman.Types
         /// <returns>The response type.</returns>
         public ResponseType TryResolveResponseType(ITypeSymbol type)
         {
-            if (ImplementsInterface(type, "IResponse"))
-            {
-                return new ResponseType(type);
-            }
+            //if (ImplementsInterface(type, "IResponse"))
+            //{
+            //    return new ResponseType(type);
+            //}
 
             return null;
+        }
+
+        private ClassDeclarationSyntax GetClassDeclaration(ITypeSymbol type)
+        {
+            return (ClassDeclarationSyntax)type.DeclaringSyntaxReferences.First().GetSyntax();
         }
 
         private bool ImplementsInterface(ITypeSymbol symbol, string interfaceName)

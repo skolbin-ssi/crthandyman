@@ -5,20 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 
-namespace CommerceRuntimeHandyman.Types
+namespace Handyman.Types
 {
     /// <summary>
     /// Represents a response type.
     /// </summary>
-    public class ResponseType
+    public class ResponseType : MemberedBaseType
     {
-        public ResponseType(ITypeSymbol symbol)
+        public ResponseType(string name, IEnumerable<Member> members)
+            : base(name, "IResponse", members)
         {
-            this.Symbol = symbol;
         }
-
-        public ITypeSymbol Symbol { get; private set; }
-
-        public string Name { get { return this.Symbol.Name; } }
     }
 }

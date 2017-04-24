@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CommerceRuntimeHandyman.Types;
+using Handyman.Types;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.FindSymbols;
@@ -24,11 +24,11 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
         public IEnumerable<SuggestedActionSet> GetSuggestedActions(ISuggestedActionCategorySet requestedActionCategories, SnapshotSpan range, CancellationToken cancellationToken)
         {
-            var symbol = TryGetMethodDefinition(range, cancellationToken).Result;
+            var handlerImplementation = TryGetMethodDefinition(range, cancellationToken).Result;
 
-            if (symbol != null)
+            if (handlerImplementation != null)
             {
-                yield return new SuggestedActionSet(new[] { new SuggestedAction(symbol.Name) });
+                yield return new SuggestedActionSet(new[] { new SuggestedAction(handlerImplementation) });
             }
         }
 
@@ -43,7 +43,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
             return true;
         }
 
-        private async Task<IMethodSymbol> TryGetMethodDefinition(SnapshotSpan range, CancellationToken cancellationToken)
+        private async Task<RequestHandlerImplementation> TryGetMethodDefinition(SnapshotSpan range, CancellationToken cancellationToken)
         {
             var document = range.Snapshot.TextBuffer.GetRelatedDocuments().FirstOrDefault();
 
@@ -58,7 +58,8 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
                     Type nodeType = node.GetType();
                     if (nodeType == typeof(MethodDeclarationSyntax))
                     {
-                        return (IMethodSymbol)semanticModel.GetDeclaredSymbol(node);
+                        var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(node);
+                        return RequestHandlerImplementation.TryParse(methodSymbol);
                     }
                     else if (nodeType == typeof(BlockSyntax))
                     {
