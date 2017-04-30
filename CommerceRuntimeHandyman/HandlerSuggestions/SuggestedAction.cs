@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Handyman.Generators;
 using Handyman.Types;
+using Microsoft.CodeAnalysis;
 using Microsoft.VisualStudio.Imaging.Interop;
 using Microsoft.VisualStudio.Language.Intellisense;
 
@@ -25,10 +27,12 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
         ImageMoniker ISuggestedAction.IconMoniker => default(ImageMoniker);
 
         private RequestHandlerImplementation requestHandler;
+        private WorkspaceManager workspaceManager;
 
-        public SuggestedAction(RequestHandlerImplementation requestHandler)
+        public SuggestedAction(WorkspaceManager workspaceManager, RequestHandlerImplementation requestHandler)
         {
             this.requestHandler = requestHandler;
+            this.workspaceManager = workspaceManager;
         }
 
         public void Dispose()
@@ -47,7 +51,13 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
         public void Invoke(CancellationToken cancellationToken)
         {
+            var generator = new MemberedTypeGenerator();
 
+            string requestCode = generator.GenerateSyntax(this.requestHandler.RequestType);
+            this.workspaceManager.CreateOrUpdateDocument(this.requestHandler.RequestType.Name, requestCode);
+
+            string responseCode = generator.GenerateSyntax(this.requestHandler.ResponseType);
+            this.workspaceManager.CreateOrUpdateDocument(this.requestHandler.ResponseType.Name, responseCode);
         }
 
         public bool TryGetTelemetryId(out Guid telemetryId)

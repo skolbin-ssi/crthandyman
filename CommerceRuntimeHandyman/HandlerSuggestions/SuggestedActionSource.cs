@@ -15,7 +15,13 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 {
     public class SuggestedActionsSource : ISuggestedActionsSource
     {
+        private WorkspaceManager workspaceManager;
         public event EventHandler<EventArgs> SuggestedActionsChanged;
+
+        public SuggestedActionsSource(WorkspaceManager workspaceManager)
+        {
+            this.workspaceManager = workspaceManager;
+        }
 
         public void Dispose()
         {
@@ -28,7 +34,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
             if (handlerImplementation != null)
             {
-                yield return new SuggestedActionSet(new[] { new SuggestedAction(handlerImplementation) });
+                yield return new SuggestedActionSet(new[] { new SuggestedAction(this.workspaceManager, handlerImplementation) });
             }
         }
 

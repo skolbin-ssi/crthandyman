@@ -1,12 +1,7 @@
-﻿using Microsoft.VisualStudio.Language.Intellisense;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.Composition;
+using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
-using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Utilities;
 
 namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
@@ -16,6 +11,9 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
     [ContentType("text")]
     public class SuggestedActionsSourceProvider : ISuggestedActionsSourceProvider
     {
+        [Import]
+        private WorkspaceManager workspaceManager = null;
+
         public ISuggestedActionsSource CreateSuggestedActionsSource(ITextView textView, ITextBuffer textBuffer)
         {
             if (textBuffer == null || textView == null)
@@ -23,7 +21,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
                 return null;
             }
 
-            return new SuggestedActionsSource();
+            return new SuggestedActionsSource(workspaceManager);
         }
     }
 }
