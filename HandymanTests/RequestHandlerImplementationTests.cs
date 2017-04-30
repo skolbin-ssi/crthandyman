@@ -34,7 +34,7 @@ namespace Handyman.Tests
 
             var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
 
-            Assert.IsNotNull(RequestHandlerImplementation.TryParse(methodSymbol));
+            Assert.IsNotNull(RequestHandlerDefinition.TryParse(methodSymbol));
         }
     }
 }

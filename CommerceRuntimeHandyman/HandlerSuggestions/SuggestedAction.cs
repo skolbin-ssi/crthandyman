@@ -26,10 +26,10 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
         ImageMoniker ISuggestedAction.IconMoniker => default(ImageMoniker);
 
-        private RequestHandlerImplementation requestHandler;
+        private RequestHandlerDefinition requestHandler;
         private WorkspaceManager workspaceManager;
 
-        public SuggestedAction(WorkspaceManager workspaceManager, RequestHandlerImplementation requestHandler)
+        public SuggestedAction(WorkspaceManager workspaceManager, RequestHandlerDefinition requestHandler)
         {
             this.requestHandler = requestHandler;
             this.workspaceManager = workspaceManager;

@@ -17,5 +17,20 @@ namespace Handyman.Generators
         {
             return new MemberedTemplate(memberedType).TransformText();
         }
+
+        ////private void CreateClass(MemberedBaseType memberedType)
+        ////{
+        ////    var ns = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("Sample")).NormalizeWhitespace();            
+
+        ////    var clazz = SyntaxFactory.ClassDeclaration(memberedType.Name)
+        ////        .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));                
+
+        ////    if (!string.IsNullOrWhiteSpace(memberedType.BaseClassName))
+        ////    {
+        ////        clazz = clazz.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(memberedType.BaseClassName)));
+        ////    }            
+
+        ////    ns.AddMembers()
+        ////}
     }
 }

@@ -25,7 +25,8 @@ namespace Handyman.Tests.TestHelpers
 
         private static readonly CSharpCompilationOptions DefaultCompilationOptions =
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
-                    .WithOverflowChecks(true).WithOptimizationLevel(OptimizationLevel.Debug);
+                    .WithOverflowChecks(true).WithOptimizationLevel(OptimizationLevel.Debug)
+                    .WithWarningLevel(0);
 
         public static Compilation Compile(string code)
         {

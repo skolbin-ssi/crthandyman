@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Handyman.Types;
+using Microsoft.CodeAnalysis;
 
 namespace Handyman.Generators
 {
@@ -21,8 +22,13 @@ namespace Handyman.Generators
         {
             foreach (var member in this.m.Members)
             {
-                yield return member.Type.Name + " " + member.Name;
+                yield return GetToken(member.Type) + " " + member.Name;
             }
+        }
+
+        private static string GetToken(ISymbol symbol)
+        {
+            return symbol.ToDisplayString();
         }
 
         private string ToCamelCase(string str)

@@ -7,6 +7,7 @@ using Handyman.Generators;
 using Handyman.Tests.TestHelpers;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 
@@ -18,8 +19,10 @@ namespace Handyman.Tests
         [TestMethod]
         public void GenerateSyntax_ValidCode()
         {
-            var symbol = MockRepository.GenerateMock<ITypeSymbol>();
-            symbol.Stub(s => s.Name).Return("int");
+            SyntaxTree tree;
+            var compilation = RoslynHelper.Compile("class X { string[] id; }", out tree);
+            var member = tree.GetRoot().DescendantNodesAndSelf().OfType<VariableDeclarationSyntax>().First();
+            var symbol = (ITypeSymbol)compilation.GetSemanticModel(tree).GetTypeInfo(member.Type).Type;
 
             string code = new MemberedTypeGenerator().GenerateSyntax(new RequestType("Sample", new[] { new Member("id", symbol) }));
 

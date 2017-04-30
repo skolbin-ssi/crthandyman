@@ -1,30 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EnvDTE;
-using EnvDTE80;
+﻿using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
-using Microsoft.VisualStudio.LanguageServices;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 
 namespace CommerceRuntimeHandyman
 {
-    [Export]
     public class WorkspaceManager
     {
-        //[Import]
-        private SVsServiceProvider ServiceProvider = null;
-
         private Workspace workspace;
 
-        public WorkspaceManager()
+        public WorkspaceManager(Workspace workspace)
         {
-            this.workspace = (Workspace)this.ServiceProvider.GetService(typeof(VisualStudioWorkspace));            
+            this.workspace = workspace;
         }
 
         public void CreateOrUpdateDocument(string name, string documentContent)

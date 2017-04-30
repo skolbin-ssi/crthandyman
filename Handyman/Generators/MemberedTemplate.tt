@@ -18,6 +18,6 @@ public class <#= m.Name #> : <#= m.BaseClassName #>
     /// Gets or sets TODO.
     /// </summary>
 <# foreach (var member in m.Members) { #>
-    public <#= member.Type.Name #> <#= member.Name #> { get; private set; }
+    public <#= GetToken(member.Type) #> <#= member.Name #> { get; private set; }
 <# } #>
 }

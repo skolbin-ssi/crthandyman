@@ -11,11 +11,11 @@ namespace Handyman.Types
     /// <summary>
     /// Represents the implementation of a request handler.
     /// </summary>
-    public class RequestHandlerImplementation
+    public class RequestHandlerDefinition
     {
         private IMethodSymbol requestHandlerMethod;
 
-        public RequestHandlerImplementation(RequestType requestType, ResponseType responseType, IMethodSymbol requestHandlerMethod)
+        public RequestHandlerDefinition(RequestType requestType, ResponseType responseType, IMethodSymbol requestHandlerMethod)
         {
             this.RequestType = requestType;
             this.ResponseType = responseType;
@@ -49,7 +49,7 @@ namespace Handyman.Types
         ////    return null;
         ////}
 
-        public static RequestHandlerImplementation TryParse(IMethodSymbol method)
+        public static RequestHandlerDefinition TryParse(IMethodSymbol method)
         {
             // method needs to belong to class
             if (method.ContainingSymbol != null)
@@ -63,7 +63,9 @@ namespace Handyman.Types
                     responseMembers = responseMembers.Concat(new[] { new Member(method.ReturnType.Name, method.ReturnType) });
                 }
 
-                var responseType = new ResponseType(method.Name + "Response", responseMembers);
+                ResponseType responseType = responseMembers.Any()
+                    ? new ResponseType(method.Name + "Response", responseMembers)
+                    : ResponseType.VoidResponse;
 
                 var requetMembers = method.Parameters
                     .Where(p => p.RefKind == RefKind.None)
@@ -71,7 +73,7 @@ namespace Handyman.Types
 
                 var requestType = new RequestType(method.Name + "Request", requetMembers);
 
-                return new RequestHandlerImplementation(requestType, responseType, method);
+                return new RequestHandlerDefinition(requestType, responseType, method);
             }
 
             return null;

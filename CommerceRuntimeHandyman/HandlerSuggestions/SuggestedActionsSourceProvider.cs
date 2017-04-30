@@ -12,7 +12,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
     public class SuggestedActionsSourceProvider : ISuggestedActionsSourceProvider
     {
         [Import]
-        private WorkspaceManager workspaceManager = null;
+        private WorkspaceManagerFactory workspaceManager = null;
 
         public ISuggestedActionsSource CreateSuggestedActionsSource(ITextView textView, ITextBuffer textBuffer)
         {
@@ -21,7 +21,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
                 return null;
             }
 
-            return new SuggestedActionsSource(workspaceManager);
+            return new SuggestedActionsSource(this.workspaceManager.Manager);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Handyman.Analyzer;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -49,29 +50,13 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
             return true;
         }
 
-        private async Task<RequestHandlerImplementation> TryGetMethodDefinition(SnapshotSpan range, CancellationToken cancellationToken)
+        private async Task<RequestHandlerDefinition> TryGetMethodDefinition(SnapshotSpan range, CancellationToken cancellationToken)
         {
             var document = range.Snapshot.TextBuffer.GetRelatedDocuments().FirstOrDefault();
 
             if (document != null)
             {
-                var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
-                var syntaxTree = await semanticModel.SyntaxTree.GetRootAsync(cancellationToken);
-                var token = syntaxTree.FindToken(range.Start);
-
-                foreach (var node in token.Parent.AncestorsAndSelf())
-                {
-                    Type nodeType = node.GetType();
-                    if (nodeType == typeof(MethodDeclarationSyntax))
-                    {
-                        var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(node);
-                        return RequestHandlerImplementation.TryParse(methodSymbol);
-                    }
-                    else if (nodeType == typeof(BlockSyntax))
-                    {
-                        return null;
-                    }
-                }
+                return await new RequestHandlerAnalyzer(document).TryGetHandlerDefinition(range.Start, cancellationToken);
             }
 
             return null;

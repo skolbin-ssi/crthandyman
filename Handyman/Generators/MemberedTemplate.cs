@@ -112,7 +112,7 @@ namespace Handyman.Generators
             this.Write("    public ");
             
             #line 21 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(member.Type.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetToken(member.Type)));
             
             #line default
             #line hidden
