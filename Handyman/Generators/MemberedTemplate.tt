@@ -1,23 +1,26 @@
 ﻿<#@ template language="C#" #>
+/// <summary>
+/// <#= this.m.Documentation #>
+/// </summary>
 public class <#= m.Name #> : <#= m.BaseClassName #>
 {
     /// <summary>
-    /// TODO
+    /// Initializes a new instance of the <see cref="<#= m.Name #>"/> class.
     /// </summary>
 <# foreach (var member in m.Members) { #>
-    /// <param name="<#= member.Name #>"></param>
+    /// <param name="<#= member.Name #>"><#= member.Documentation #></param>
 <# } #>
-    public <#= m.Name #>(<# string.Join(",", this.GetTypedMember()); #>)
+    public <#= m.Name #>(<#= this.ConstructorArguments #>)
     {
 <# foreach (var member in m.Members) { #>
         this.<#= member.Name #> = <#= this.ToCamelCase(member.Name) #>;
 <# } #>
     }
 
-    /// <summary>
-    /// Gets or sets TODO.
-    /// </summary>
 <# foreach (var member in m.Members) { #>
+    /// <summary>
+    /// Gets or sets <#= ToFirstCharLower(member.Documentation) #>
+    /// </summary>
     public <#= GetToken(member.Type) #> <#= member.Name #> { get; private set; }
 <# } #>
 }

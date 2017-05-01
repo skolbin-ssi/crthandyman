@@ -149,7 +149,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analyzer\RequestHandlerAnalyzer.cs" />
+    <Compile Include="Analyzers\DocumentationAnalyzer.cs" />
+    <Compile Include="Analyzers\RequestHandlerAnalyzer.cs" />
     <Compile Include="Generators\MemberedTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -183,6 +184,9 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MemberedTemplate.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DocumentationAnalyzerXDocument\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

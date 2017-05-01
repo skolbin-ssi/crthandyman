@@ -51,13 +51,7 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
         public void Invoke(CancellationToken cancellationToken)
         {
-            var generator = new MemberedTypeGenerator();
-
-            string requestCode = generator.GenerateSyntax(this.requestHandler.RequestType);
-            this.workspaceManager.CreateOrUpdateDocument(this.requestHandler.RequestType.Name, requestCode);
-
-            string responseCode = generator.GenerateSyntax(this.requestHandler.ResponseType);
-            this.workspaceManager.CreateOrUpdateDocument(this.requestHandler.ResponseType.Name, responseCode);
+            this.workspaceManager.CreateOrUpdateRequestHandlerDefinition(this.requestHandler);
         }
 
         public bool TryGetTelemetryId(out Guid telemetryId)

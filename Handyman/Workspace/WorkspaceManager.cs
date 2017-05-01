@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Handyman.Generators;
+using Handyman.Types;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 
@@ -13,7 +15,21 @@ namespace CommerceRuntimeHandyman
             this.workspace = workspace;
         }
 
-        public void CreateOrUpdateDocument(string name, string documentContent)
+        public void CreateOrUpdateRequestHandlerDefinition(RequestHandlerDefinition requestHandler)
+        {
+            var generator = new MemberedTypeGenerator();
+
+            string requestCode = generator.GenerateSyntax(requestHandler.RequestType);
+            this.CreateOrUpdateDocument(requestHandler.RequestType.Name, requestCode);
+
+            if (!requestHandler.ResponseType.IsVoidResponse)
+            {
+                string responseCode = generator.GenerateSyntax(requestHandler.ResponseType);
+                this.CreateOrUpdateDocument(requestHandler.ResponseType.Name, responseCode);
+            }
+        }
+
+        private void CreateOrUpdateDocument(string name, string documentContent)
         {
             name = name + ".cs";
 

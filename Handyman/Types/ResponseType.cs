@@ -15,10 +15,10 @@ namespace Handyman.Types
         /// <summary>
         /// Represents a void response (i.e. no response).
         /// </summary>
-        public static readonly ResponseType VoidResponse = new ResponseType("NullResponse", new Member[0]);
+        public static readonly ResponseType VoidResponse = new ResponseType("NullResponse", new Member[0], string.Empty);
 
-        public ResponseType(string name, IEnumerable<Member> members)
-            : base(name, "IResponse", members)
+        public ResponseType(string name, IEnumerable<Member> members, string documentation)
+            : base(name, "IResponse", members, documentation)
         {
         }
 

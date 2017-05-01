@@ -18,6 +18,14 @@ namespace Handyman.Generators
             this.m = memberedType;
         }
 
+        private string ConstructorArguments
+        {
+            get
+            {
+                return string.Join(",", this.GetTypedMember());
+            }
+        }
+
         private IEnumerable<string> GetTypedMember()
         {
             foreach (var member in this.m.Members)
@@ -31,16 +39,21 @@ namespace Handyman.Generators
             return symbol.ToDisplayString();
         }
 
-        private string ToCamelCase(string str)
+        private string ToFirstCharLower(string value)
         {
-            if (string.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrWhiteSpace(value))
             {
-                return str;
+                return value;
             }
 
-            var chars = str.ToCharArray();
+            var chars = value.ToCharArray();
             chars[0] = char.ToLower(chars[0]);
             return new string(chars);
+        }
+
+        private string ToCamelCase(string value)
+        {
+            return this.ToFirstCharLower(value);
         }
     }
 }

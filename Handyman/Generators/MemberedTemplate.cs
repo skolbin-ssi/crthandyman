@@ -25,107 +25,135 @@ namespace Handyman.Generators
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("public class ");
+            this.Write("/// <summary>\r\n/// ");
             
-            #line 2 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 3 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.m.Documentation));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n/// </summary>\r\npublic class ");
+            
+            #line 5 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Name));
             
             #line default
             #line hidden
             this.Write(" : ");
             
-            #line 2 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 5 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.BaseClassName));
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n    /// <summary>\r\n    /// TODO\r\n    /// </summary>\r\n");
+            this.Write("\r\n{\r\n    /// <summary>\r\n    /// Initializes a new instance of the <see cref=\"");
             
-            #line 7 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 8 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(m.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\"/> class.\r\n    /// </summary>\r\n");
+            
+            #line 10 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
  foreach (var member in m.Members) { 
             
             #line default
             #line hidden
             this.Write("    /// <param name=\"");
             
-            #line 8 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 11 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(member.Name));
             
             #line default
             #line hidden
-            this.Write("\"></param>\r\n");
+            this.Write("\">");
             
-            #line 9 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 11 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(member.Documentation));
+            
+            #line default
+            #line hidden
+            this.Write("</param>\r\n");
+            
+            #line 12 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("    public ");
             
-            #line 10 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 13 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 10 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
- string.Join(",", this.GetTypedMember()); 
+            #line 13 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.ConstructorArguments));
             
             #line default
             #line hidden
             this.Write(")\r\n    {\r\n");
             
-            #line 12 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 15 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
  foreach (var member in m.Members) { 
             
             #line default
             #line hidden
             this.Write("        this.");
             
-            #line 13 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 16 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(member.Name));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 13 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 16 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.ToCamelCase(member.Name)));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 14 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 17 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("    }\r\n\r\n    /// <summary>\r\n    /// Gets or sets TODO.\r\n    /// </summary>\r\n");
+            this.Write("    }\r\n\r\n");
             
             #line 20 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
  foreach (var member in m.Members) { 
             
             #line default
             #line hidden
-            this.Write("    public ");
+            this.Write("    /// <summary>\r\n    /// Gets or sets ");
             
-            #line 21 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 22 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ToFirstCharLower(member.Documentation)));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    /// </summary>\r\n    public ");
+            
+            #line 24 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetToken(member.Type)));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 21 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 24 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(member.Name));
             
             #line default
             #line hidden
             this.Write(" { get; private set; }\r\n");
             
-            #line 22 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            #line 25 "C:\Users\andre\documents\visual studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
  } 
             
             #line default

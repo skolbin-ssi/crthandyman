@@ -11,16 +11,19 @@ namespace Handyman.Types
     /// </summary>
     public abstract class MemberedBaseType
     {
-        public MemberedBaseType(string name, string baseClassName, IEnumerable<Member> members)
+        public MemberedBaseType(string name, string baseClassName, IEnumerable<Member> members, string documentation)
         {
             this.Name = name;
             this.Members = new List<Member>(members);
             this.BaseClassName = baseClassName;
+            this.Documentation = documentation;
         }
 
         public string Name { get; set; }
 
         public IList<Member> Members { get; private set; }        
+
+        public string Documentation { get; private set; }
 
         public string BaseClassName { get; private set; }
     }

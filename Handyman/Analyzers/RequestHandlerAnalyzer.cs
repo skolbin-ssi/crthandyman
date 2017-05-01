@@ -8,7 +8,7 @@ using Handyman.Types;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Handyman.Analyzer
+namespace Handyman.Analyzers
 {
     public class RequestHandlerAnalyzer
     {
@@ -16,15 +16,12 @@ namespace Handyman.Analyzer
 
         public RequestHandlerAnalyzer(Document document)
         {
-            if (document == null)
-            {
-                throw new ArgumentNullException(nameof(document));
-            }
+            this.document = document ?? throw new ArgumentNullException(nameof(document));
         }
 
         public async Task<RequestHandlerDefinition> TryGetHandlerDefinition(int tokenPosition, CancellationToken cancellationToken)
         {
-            var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
+            var semanticModel = await this.document.GetSemanticModelAsync(cancellationToken);
             var syntaxTree = await semanticModel.SyntaxTree.GetRootAsync(cancellationToken);
             var token = syntaxTree.FindToken(tokenPosition);
 

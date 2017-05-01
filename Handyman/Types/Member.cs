@@ -10,14 +10,17 @@ namespace Handyman.Types
 {
     public class Member
     {
-        public Member(string name, ITypeSymbol type)
+        public Member(string name, ITypeSymbol type, string documentation = "")
         {
             this.Name = name;
             this.Type = type;
+            this.Documentation = documentation;
         }
 
         public string Name { get; private set; }
 
         public ITypeSymbol Type { get; private set; }
+
+        public string Documentation { get; private set; }
     }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using Handyman.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -54,29 +57,46 @@ namespace Handyman.Types
             // method needs to belong to class
             if (method.ContainingSymbol != null)
             {
+                string methodDoc = method.GetDocumentationCommentXml();
+                var doc = new DocumentationAnalyzer(methodDoc);
+
+                // REQUEST
+                var requetMembers = method.Parameters
+                    .Where(p => p.RefKind == RefKind.None)
+                    .Select(p => CreateMemberFromParameter(p, doc));
+
+                var requestType = new RequestType(method.Name + "Request", requetMembers, doc.Summary);
+
+                // RESPONSE
                 var responseMembers = method.Parameters
                     .Where(p => p.RefKind == RefKind.Out)
-                    .Select(p => new Member(p.Name, p.Type));
+                    .Select(p => CreateMemberFromParameter(p, doc));
 
                 if (!method.ReturnsVoid)
                 {
-                    responseMembers = responseMembers.Concat(new[] { new Member(method.ReturnType.Name, method.ReturnType) });
+                    responseMembers = responseMembers.Concat(new[] { CreateMemberFromReturnType(method.ReturnType, doc) });
                 }
 
+                string responseDocumentation = $"The response for {{{requestType.Name}}}.";
+
                 ResponseType responseType = responseMembers.Any()
-                    ? new ResponseType(method.Name + "Response", responseMembers)
+                    ? new ResponseType(method.Name + "Response", responseMembers, responseDocumentation)
                     : ResponseType.VoidResponse;
-
-                var requetMembers = method.Parameters
-                    .Where(p => p.RefKind == RefKind.None)
-                    .Select(p => new Member(p.Name, p.Type));
-
-                var requestType = new RequestType(method.Name + "Request", requetMembers);
 
                 return new RequestHandlerDefinition(requestType, responseType, method);
             }
 
             return null;
+        }
+
+        private static Member CreateMemberFromParameter(IParameterSymbol parameter, DocumentationAnalyzer doc)
+        {           
+            return new Member(parameter.Name, parameter.Type, doc.GetParameter(parameter.Name));
+        }
+
+        private static Member CreateMemberFromReturnType(ITypeSymbol type, DocumentationAnalyzer doc)
+        {
+            return new Member(type.Name, type, doc.Returns);
         }
     }
 }

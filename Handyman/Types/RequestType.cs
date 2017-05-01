@@ -14,8 +14,8 @@ namespace Handyman.Types
     /// </summary>
     public class RequestType : MemberedBaseType
     {
-        public RequestType(string name, IEnumerable<Member> members)
-            : base(name, "IRequest", members)
+        public RequestType(string name, IEnumerable<Member> members, string documentation)
+            : base(name, "IRequest", members, documentation)
         {
         }
     }
