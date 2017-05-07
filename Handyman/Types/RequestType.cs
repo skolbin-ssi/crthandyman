@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Handyman.Settings;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -15,7 +16,7 @@ namespace Handyman.Types
     public class RequestType : MemberedBaseType
     {
         public RequestType(string name, IEnumerable<Member> members, string documentation)
-            : base(name, "IRequest", members, documentation)
+            : base(name, SettingsManager.Instance.RequestInterfaceName, members, documentation)
         {
         }
     }

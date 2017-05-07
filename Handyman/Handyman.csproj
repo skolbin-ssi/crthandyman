@@ -30,6 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Esent.Interop, Version=1.9.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ManagedEsent.1.9.4\lib\net40\Esent.Interop.dll</HintPath>
@@ -159,17 +165,19 @@
     <Compile Include="Generators\MemberedTemplatePartial.cs" />
     <Compile Include="Generators\MemberedTypeGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\ISettings.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Types\Member.cs" />
     <Compile Include="Types\MemberedBaseType.cs" />
     <Compile Include="Types\RequestHandlerDefinition.cs" />
-    <Compile Include="Types\RequestHandlerImplementationState.cs" />
     <Compile Include="Types\RequestType.cs" />
     <Compile Include="Types\ResponseType.cs" />
-    <Compile Include="Types\TypeResolver.cs" />
     <Compile Include="Workspace\WorkspaceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Key.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -185,8 +193,6 @@
       <LastGenOutput>MemberedTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DocumentationAnalyzerXDocument\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

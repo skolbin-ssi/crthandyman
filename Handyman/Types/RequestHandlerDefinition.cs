@@ -28,29 +28,6 @@ namespace Handyman.Types
         public RequestType RequestType { get; private set; }
 
         public ResponseType ResponseType { get; private set; }
-        
-        ////public static RequestHandlerImplementation TryParse(IMethodSymbol method)
-        ////{
-        ////    // method needs to belong to class
-        ////    if (method.ContainingSymbol != null)
-        ////    {
-        ////        // ResponseType MethodName RequestType
-        ////        var returnType = method.ReturnType;
-        ////        var parameterType = method.Parameters.FirstOrDefault()?.Type;
-
-        ////        var typeResolver = TypeResolver.Instance;
-
-        ////        var responseType = typeResolver.TryResolveResponseType(returnType);
-        ////        var requestType = typeResolver.TryResolveRequestType(parameterType);
-
-        ////        if (responseType != null && requestType != null)
-        ////        {
-        ////            return new RequestHandlerImplementation(requestType, responseType, method);
-        ////        }
-        ////    }
-
-        ////    return null;
-        ////}
 
         public static RequestHandlerDefinition TryParse(IMethodSymbol method)
         {

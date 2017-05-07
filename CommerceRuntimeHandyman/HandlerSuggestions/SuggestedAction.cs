@@ -14,13 +14,13 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
     {
         public bool HasActionSets => false;
 
-        public string DisplayText => "Transform into request handler";
+        public string DisplayText => "Create or update request/response";
 
-        public object IconMoniker => "IconMoniker";
+        public object IconMoniker => string.Empty;
 
-        public string IconAutomationText => "IconAutomationText";
+        public string IconAutomationText => string.Empty;
 
-        public string InputGestureText => "InputGestureText";
+        public string InputGestureText => string.Empty;
 
         public bool HasPreview => false;
 

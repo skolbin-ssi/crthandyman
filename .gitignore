@@ -4,3 +4,4 @@ objd/
 .vs/
 packages/
 *.csproj.user
+*.snk
