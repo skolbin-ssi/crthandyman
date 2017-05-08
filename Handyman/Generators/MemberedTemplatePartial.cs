@@ -30,7 +30,7 @@ namespace Handyman.Generators
         {
             foreach (var member in this.m.Members)
             {
-                yield return GetToken(member.Type) + " " + member.Name;
+                yield return GetToken(member.Type) + " " + ToFirstCharLower(member.Name);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Handyman.Generators
             return symbol.ToDisplayString();
         }
 
-        private string ToFirstCharLower(string value)
+        private static string ToFirstCharLower(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -53,7 +53,7 @@ namespace Handyman.Generators
 
         private string ToCamelCase(string value)
         {
-            return this.ToFirstCharLower(value);
+            return ToFirstCharLower(value);
         }
     }
 }

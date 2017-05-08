@@ -51,6 +51,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <VSCTCompile Include="CommandTable.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+    <Compile Include="Commands.cs" />
     <Compile Include="HandlerSuggestions\SuggestedAction.cs" />
     <Compile Include="HandlerSuggestions\SuggestedActionSource.cs" />
     <Compile Include="HandlerSuggestions\SuggestedActionsSourceProvider.cs" />

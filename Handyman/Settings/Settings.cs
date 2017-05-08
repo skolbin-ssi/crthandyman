@@ -4,10 +4,10 @@ namespace Handyman.Settings
 {
     public class Settings : ISettings
     {
-        public string RequestInterfaceName { get; set; } = "IRequest";
+        public string RequestInterfaceFQN { get; set; } = "Microsoft.Dynamics.Commerce.Runtime.IRequest";
 
-        public string ResponseInterfaceName { get; set; } = "IResponse";
+        public string ResponseInterfaceFQN { get; set; } = "Microsoft.Dynamics.Commerce.Runtime.IResponse";
 
-        public string HandlerInterfaceName { get; set; } = "IRequestHandler";
+        public string HandlerInterfaceFQN { get; set; } = "Microsoft.Dynamics.Commerce.Runtime.IRequestHandler";
     }
 }

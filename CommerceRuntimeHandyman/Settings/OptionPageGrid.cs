@@ -15,29 +15,29 @@ namespace CommerceRuntimeHandyman.Settings
 
         [Category(InterfacesCategoryName)]
         [DisplayName("Request interface name")]
-        [Description("The name of the interface that represents a request message.")]
-        public string RequestInterfaceName
+        [Description("The full qualified name of the interface that represents a request message.")]
+        public string RequestInterfaceFQN
         {
-            get { return this.settings.RequestInterfaceName; }
-            set { this.settings.RequestInterfaceName = value; }
+            get { return this.settings.RequestInterfaceFQN; }
+            set { this.settings.RequestInterfaceFQN = value; }
         }
 
         [Category(InterfacesCategoryName)]
         [DisplayName("Response interface name")]
-        [Description("The name of the interface that represents a response message.")]
-        public string ResponseInterfaceName
+        [Description("The full qualified name of the interface that represents a response message.")]
+        public string ResponseInterfaceFQN
         {
-            get { return this.settings.ResponseInterfaceName; }
-            set { this.settings.ResponseInterfaceName = value; }
+            get { return this.settings.ResponseInterfaceFQN; }
+            set { this.settings.ResponseInterfaceFQN = value; }
         }
 
         [Category(InterfacesCategoryName)]
         [DisplayName("Request handler interface name")]
-        [Description("The name of the interface that represents a request handler.")]
-        public string HandlerInterfaceName
+        [Description("The full qualified name of the interface that represents a request handler.")]
+        public string HandlerInterfaceFQN
         {
-            get { return this.settings.HandlerInterfaceName; }
-            set { this.settings.HandlerInterfaceName = value; }
+            get { return this.settings.HandlerInterfaceFQN; }
+            set { this.settings.HandlerInterfaceFQN = value; }
         }
 
         public void UpdateSettings()

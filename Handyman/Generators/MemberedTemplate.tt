@@ -16,10 +16,10 @@ public class <#= m.Name #> : <#= m.BaseClassName #>
         this.<#= member.Name #> = <#= this.ToCamelCase(member.Name) #>;
 <# } #>
     }
-
+    
 <# foreach (var member in m.Members) { #>
     /// <summary>
-    /// Gets or sets <#= ToFirstCharLower(member.Documentation) #>
+    /// <#= member.CanWrite ? "Gets or sets" : "Gets" #> <#= ToFirstCharLower(member.Documentation) #>
     /// </summary>
     public <#= GetToken(member.Type) #> <#= member.Name #> { get; private set; }
 <# } #>

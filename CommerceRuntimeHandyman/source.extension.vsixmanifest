@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="CommerceRuntimeHandyman.Company.9e85900c-3313-4c2f-96f0-831926918688" Version="1.0" Language="en-US" Publisher="Company" />
+    <Identity Id="CommerceRuntimeHandyman.Company.9e85900c-3313-4c2f-96f0-831926918688" Version="0.1.0" Language="en-US" Publisher="Andre Esteve" />
     <DisplayName>CommerceRuntimeHandyman</DisplayName>
     <Description>Empty VSIX Project.</Description>
   </Metadata>

@@ -6,18 +6,18 @@
     public interface ISettings
     {
         /// <summary>
-        /// Gets the name of the interface for a request.
+        /// Gets the full qualified name of the interface for a request.
         /// </summary>
-        string RequestInterfaceName { get; }
+        string RequestInterfaceFQN { get; }
 
         /// <summary>
-        /// Gets the name of the interface for a response.
+        /// Gets the full qualified name of the interface for a response.
         /// </summary>
-        string ResponseInterfaceName { get; }
+        string ResponseInterfaceFQN { get; }
 
         /// <summary>
-        /// Gets the name of the interface for a request handler.
+        /// Gets the full qualified name of the interface for a request handler.
         /// </summary>
-        string HandlerInterfaceName { get; }
+        string HandlerInterfaceFQN { get; }
     }
 }

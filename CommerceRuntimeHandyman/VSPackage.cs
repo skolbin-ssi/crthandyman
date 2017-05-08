@@ -39,6 +39,7 @@ namespace CommerceRuntimeHandyman
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [Guid(VSPackage.PackageGuidString)]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     [ProvideOptionPage(typeof(OptionPageGrid), OptionPageGrid.Category, OptionPageGrid.Name, 0, 0, true)]
     public sealed class VSPackage : Package
@@ -67,6 +68,12 @@ namespace CommerceRuntimeHandyman
         {
             base.Initialize();
             ((OptionPageGrid)this.GetDialogPage(typeof(OptionPageGrid))).UpdateSettings();
+
+            var mcs = (OleMenuCommandService)GetService(typeof(IMenuCommandService));
+            var commandId = new CommandID(typeof(Commands).GUID, (int)Commands.SetRequestProjectCommand);
+            mcs.AddCommand(new MenuCommand(delegate {
+                System.Windows.MessageBox.Show("You clicked me!");
+            }, commandId));
         }
     }
 }

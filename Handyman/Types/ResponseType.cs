@@ -19,7 +19,7 @@ namespace Handyman.Types
         public static readonly ResponseType VoidResponse = new ResponseType("NullResponse", new Member[0], string.Empty);
 
         public ResponseType(string name, IEnumerable<Member> members, string documentation)
-            : base(name, SettingsManager.Instance.ResponseInterfaceName, members, documentation)
+            : base(name, SettingsManager.Instance.RequestInterfaceFQN, members, documentation)
         {
         }
 

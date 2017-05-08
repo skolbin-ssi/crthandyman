@@ -123,14 +123,21 @@ namespace Handyman.Generators
             
             #line default
             #line hidden
-            this.Write("    }\r\n\r\n");
+            this.Write("    }\r\n    \r\n");
             
             #line 20 "C:\Users\andre\Documents\Visual Studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
  foreach (var member in m.Members) { 
             
             #line default
             #line hidden
-            this.Write("    /// <summary>\r\n    /// Gets or sets ");
+            this.Write("    /// <summary>\r\n    /// ");
+            
+            #line 22 "C:\Users\andre\Documents\Visual Studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(member.CanWrite ? "Gets or sets" : "Gets"));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
             
             #line 22 "C:\Users\andre\Documents\Visual Studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ToFirstCharLower(member.Documentation)));
