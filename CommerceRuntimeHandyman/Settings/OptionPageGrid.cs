@@ -4,14 +4,14 @@ using Microsoft.VisualStudio.Shell;
 
 namespace CommerceRuntimeHandyman.Settings
 {
-    public class OptionPageGrid : DialogPage, ISettings
+    public class OptionPageGrid : DialogPage, IGlobalSettings
     {
         internal const string Category = "CommerceRuntimeHandyman";
         internal const string Name = "Options";
 
         private const string InterfacesCategoryName = "Interface names";
 
-        private Handyman.Settings.Settings settings = new Handyman.Settings.Settings();
+        private Handyman.Settings.GlobalSettings settings = new Handyman.Settings.GlobalSettings();
 
         [Category(InterfacesCategoryName)]
         [DisplayName("Request interface name")]

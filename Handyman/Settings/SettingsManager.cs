@@ -2,9 +2,9 @@
 {
     public static class SettingsManager
     {
-        public static ISettings Instance { get; private set; } = new Settings();
+        public static IGlobalSettings Instance { get; private set; } = new GlobalSettings();
 
-        public static void UpdateSettings(ISettings settings)
+        public static void UpdateSettings(IGlobalSettings settings)
         {
             Instance = settings;
         }

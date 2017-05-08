@@ -2,7 +2,7 @@
 
 namespace Handyman.Settings
 {
-    public class Settings : ISettings
+    public class GlobalSettings : IGlobalSettings
     {
         public string RequestInterfaceFQN { get; set; } = "Microsoft.Dynamics.Commerce.Runtime.IRequest";
 

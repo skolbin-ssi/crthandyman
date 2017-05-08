@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Handyman.Generators;
+using Handyman.Settings;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
@@ -9,10 +11,33 @@ namespace CommerceRuntimeHandyman
     public class WorkspaceManager
     {
         private Workspace workspace;
+        private IWorkspaceSettings settings;
 
-        public WorkspaceManager(Workspace workspace)
+        public WorkspaceManager(Workspace workspace, IWorkspaceSettings settings)
         {
             this.workspace = workspace;
+            this.Settings = settings;
+            this.SettingsHaveChanged = false;
+        }
+
+        public IWorkspaceSettings Settings
+        {
+            get
+            {                
+                return this.settings;
+            }
+            
+            set
+            {
+                this.settings = value ?? throw new ArgumentNullException(nameof(this.settings));
+                this.SettingsHaveChanged = true;
+            }
+        }
+
+        public bool SettingsHaveChanged
+        {
+            get;
+            set;
         }
 
         public void CreateOrUpdateRequestHandlerDefinition(RequestHandlerDefinition requestHandler)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Handyman.Settings;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.LanguageServices;
@@ -9,12 +10,22 @@ using Microsoft.VisualStudio.Shell;
 namespace CommerceRuntimeHandyman
 {
     [Export]
+    [PartCreationPolicy(CreationPolicy.Shared)]
     public class WorkspaceManagerFactory
-    {       
+    {
         [ImportingConstructor]
         public WorkspaceManagerFactory([Import(typeof(SVsServiceProvider), AllowDefault = true)] IServiceProvider vsServiceProvider, [Import(typeof(VisualStudioWorkspace), AllowDefault = true)] Workspace vsWorkspace)
         {
-            this.Manager = new WorkspaceManager(vsWorkspace);
+            // start with empty settings
+            this.Manager = new WorkspaceManager(vsWorkspace, new WorkspaceSettings());
+        }
+
+        public void InitializeWorkspaceSettings (WorkspaceSettings settings)
+        {
+            this.Manager.Settings = settings;
+
+            // this is initialization
+            this.Manager.SettingsHaveChanged = false;
         }
 
         public WorkspaceManager Manager { get; private set; }

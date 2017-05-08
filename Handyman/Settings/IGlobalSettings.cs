@@ -3,7 +3,7 @@
     /// <summary>
     /// Define settings schema for the Handyman library.
     /// </summary>
-    public interface ISettings
+    public interface IGlobalSettings
     {
         /// <summary>
         /// Gets the full qualified name of the interface for a request.
