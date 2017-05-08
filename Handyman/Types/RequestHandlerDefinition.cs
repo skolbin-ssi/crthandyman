@@ -51,7 +51,8 @@ namespace Handyman.Types
 
                 if (!method.ReturnsVoid)
                 {
-                    responseMembers = responseMembers.Concat(new[] { CreateMemberFromReturnType(method.ReturnType, doc) });
+                    // keep return parameter first, to avoid changing order of parameters when out parameters are added later
+                    responseMembers = new[] { CreateMemberFromReturnType(method.ReturnType, doc) }.Concat(responseMembers);
                 }
 
                 string responseDocumentation = $"The response for {{{requestType.Name}}}.";

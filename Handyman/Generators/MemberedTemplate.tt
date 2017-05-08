@@ -15,9 +15,9 @@ public class <#= m.Name #> : <#= m.BaseClassName #>
 <# foreach (var member in m.Members) { #>
         this.<#= member.Name #> = <#= this.ToCamelCase(member.Name) #>;
 <# } #>
-    }
-    
+    }    
 <# foreach (var member in m.Members) { #>
+
     /// <summary>
     /// <#= member.CanWrite ? "Gets or sets" : "Gets" #> <#= ToFirstCharLower(member.Documentation) #>
     /// </summary>

@@ -44,21 +44,38 @@ namespace CommerceRuntimeHandyman
         {
             var generator = new MemberedTypeGenerator();
 
+            string requestProjectName = this.settings.DefaultRequestProjectName;
+
             string requestCode = generator.GenerateSyntax(requestHandler.RequestType);
-            this.CreateOrUpdateDocument(requestHandler.RequestType.Name, requestCode);
+            this.CreateOrUpdateDocument(requestProjectName, requestHandler.RequestType.Name, requestCode);
 
             if (!requestHandler.ResponseType.IsVoidResponse)
             {
                 string responseCode = generator.GenerateSyntax(requestHandler.ResponseType);
-                this.CreateOrUpdateDocument(requestHandler.ResponseType.Name, responseCode);
+                this.CreateOrUpdateDocument(requestProjectName, requestHandler.ResponseType.Name, responseCode);
             }
         }
 
-        private void CreateOrUpdateDocument(string name, string documentContent)
+        private void CreateOrUpdateDocument(string projectName, string name, string documentContent)
         {
             name = name + ".cs";
 
-            var project = this.workspace.CurrentSolution.Projects.First();
+            Project project = null;
+
+            if (string.IsNullOrWhiteSpace(projectName))
+            {
+                project = this.workspace.CurrentSolution.Projects.First();
+            }
+            else
+            {
+                project = this.workspace.CurrentSolution.Projects.FirstOrDefault(p => p.Name == projectName);
+            }
+
+            if (project == null)
+            {
+                throw new ArgumentException($"Couldn't find project named '{ projectName ?? string.Empty }'.");
+            }
+
             var document = project.Documents.FirstOrDefault(d => d.Name == name);
             var text = SourceText.From(documentContent);
 

@@ -22,7 +22,7 @@ namespace Handyman.Generators
         {
             get
             {
-                return string.Join(",", this.GetTypedMember());
+                return string.Join(", ", this.GetTypedMember());
             }
         }
 
