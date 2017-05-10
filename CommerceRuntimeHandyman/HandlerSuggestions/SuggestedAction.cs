@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Handyman.Generators;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;
@@ -51,7 +52,10 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
         public void Invoke(CancellationToken cancellationToken)
         {
-            this.workspaceManager.CreateOrUpdateRequestHandlerDefinition(this.requestHandler);
+            if (!this.workspaceManager.CreateOrUpdateRequestHandlerDefinition(this.requestHandler))
+            {
+                MessageBox.Show("Couldn't apply changes to project");
+            }
         }
 
         public bool TryGetTelemetryId(out Guid telemetryId)

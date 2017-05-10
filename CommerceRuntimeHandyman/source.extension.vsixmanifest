@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="CommerceRuntimeHandyman.Company.9e85900c-3313-4c2f-96f0-831926918688" Version="0.1.0" Language="en-US" Publisher="Andre Esteve" />
-    <DisplayName>CommerceRuntimeHandyman</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Identity Id="CommerceRuntimeHandyman" Version="0.1.0" Language="en-US" Publisher="Andre Esteve" />
+    <DisplayName>Commerce Runtime Handyman</DisplayName>
+    <Description xml:space="preserve">Automate your code authoring when working with Microsoft's Dynamics AX Commerce Runtime framework.</Description>
+    <MoreInfo>    https://github.com/andreesteve/crthandyman</MoreInfo>
+    <GettingStartedGuide>index.html</GettingStartedGuide>
+    <Tags>Commerce Runtime, Dynamics AX, Commerce Runtime, Dynamics 365</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0]" />

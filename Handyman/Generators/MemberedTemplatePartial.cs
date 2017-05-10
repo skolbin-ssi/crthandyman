@@ -39,6 +39,18 @@ namespace Handyman.Generators
             return symbol.ToDisplayString();
         }
 
+        private static string ToFirstCharUpper(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return value;
+            }
+
+            var chars = value.ToCharArray();
+            chars[0] = char.ToUpper(chars[0]);
+            return new string(chars);
+        }
+
         private static string ToFirstCharLower(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -49,11 +61,6 @@ namespace Handyman.Generators
             var chars = value.ToCharArray();
             chars[0] = char.ToLower(chars[0]);
             return new string(chars);
-        }
-
-        private string ToCamelCase(string value)
-        {
-            return ToFirstCharLower(value);
         }
     }
 }

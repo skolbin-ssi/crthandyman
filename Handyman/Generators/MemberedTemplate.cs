@@ -105,14 +105,14 @@ namespace Handyman.Generators
             this.Write("        this.");
             
             #line 16 "C:\Users\andre\Documents\Visual Studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(member.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ToFirstCharUpper(member.Name)));
             
             #line default
             #line hidden
             this.Write(" = ");
             
             #line 16 "C:\Users\andre\Documents\Visual Studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(this.ToCamelCase(member.Name)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ToFirstCharLower(member.Name)));
             
             #line default
             #line hidden
@@ -154,7 +154,7 @@ namespace Handyman.Generators
             this.Write(" ");
             
             #line 24 "C:\Users\andre\Documents\Visual Studio 2017\Projects\CommerceRuntimeHandyman\Handyman\Generators\MemberedTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(member.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ToFirstCharUpper(member.Name)));
             
             #line default
             #line hidden

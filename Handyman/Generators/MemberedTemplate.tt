@@ -13,7 +13,7 @@ public class <#= m.Name #> : <#= m.BaseClassName #>
     public <#= m.Name #>(<#= this.ConstructorArguments #>)
     {
 <# foreach (var member in m.Members) { #>
-        this.<#= member.Name #> = <#= this.ToCamelCase(member.Name) #>;
+        this.<#= ToFirstCharUpper(member.Name) #> = <#= ToFirstCharLower(member.Name) #>;
 <# } #>
     }    
 <# foreach (var member in m.Members) { #>
@@ -21,6 +21,6 @@ public class <#= m.Name #> : <#= m.BaseClassName #>
     /// <summary>
     /// <#= member.CanWrite ? "Gets or sets" : "Gets" #> <#= ToFirstCharLower(member.Documentation) #>
     /// </summary>
-    public <#= GetToken(member.Type) #> <#= member.Name #> { get; private set; }
+    public <#= GetToken(member.Type) #> <#= ToFirstCharUpper(member.Name) #> { get; private set; }
 <# } #>
 }

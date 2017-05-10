@@ -55,7 +55,7 @@ namespace Handyman.Types
                     responseMembers = new[] { CreateMemberFromReturnType(method.ReturnType, doc) }.Concat(responseMembers);
                 }
 
-                string responseDocumentation = $"The response for {{{requestType.Name}}}.";
+                string responseDocumentation = $"The response for <see cref=\"{{{requestType.Name}}}\" />.";
 
                 ResponseType responseType = responseMembers.Any()
                     ? new ResponseType(method.Name + "Response", responseMembers, responseDocumentation)

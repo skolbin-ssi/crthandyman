@@ -40,26 +40,49 @@ namespace CommerceRuntimeHandyman
             set;
         }
 
-        public void CreateOrUpdateRequestHandlerDefinition(RequestHandlerDefinition requestHandler)
+        public bool CreateOrUpdateRequestHandlerDefinition(RequestHandlerDefinition requestHandler)
         {
             var generator = new MemberedTypeGenerator();
 
             string requestProjectName = this.settings.DefaultRequestProjectName;
 
+            Project project = this.GetProjectByNameOrThrow(requestProjectName);
+
             string requestCode = generator.GenerateSyntax(requestHandler.RequestType);
-            this.CreateOrUpdateDocument(requestProjectName, requestHandler.RequestType.Name, requestCode);
+            var document = this.CreateOrUpdateDocument(project, requestHandler.RequestType.Name, requestCode);
+            project = document.Project;
 
             if (!requestHandler.ResponseType.IsVoidResponse)
             {
                 string responseCode = generator.GenerateSyntax(requestHandler.ResponseType);
-                this.CreateOrUpdateDocument(requestProjectName, requestHandler.ResponseType.Name, responseCode);
+                document = this.CreateOrUpdateDocument(project, requestHandler.ResponseType.Name, responseCode);
+                project = document.Project;
             }
+
+            return workspace.TryApplyChanges(project.Solution);
         }
 
-        private void CreateOrUpdateDocument(string projectName, string name, string documentContent)
+        private Document CreateOrUpdateDocument(Project project, string name, string documentContent)
         {
             name = name + ".cs";
 
+            var document = project.Documents.FirstOrDefault(d => d.Name == name);
+            var text = SourceText.From(documentContent);
+
+            if (document == null)
+            {
+                document = project.AddDocument(name, text);                
+            }            
+            else
+            {
+                document = document.WithText(text);
+            }
+
+            return document;
+        }
+
+        private Project GetProjectByNameOrThrow(string projectName)
+        {
             Project project = null;
 
             if (string.IsNullOrWhiteSpace(projectName))
@@ -76,19 +99,7 @@ namespace CommerceRuntimeHandyman
                 throw new ArgumentException($"Couldn't find project named '{ projectName ?? string.Empty }'.");
             }
 
-            var document = project.Documents.FirstOrDefault(d => d.Name == name);
-            var text = SourceText.From(documentContent);
-
-            if (document == null)
-            {
-                document = project.AddDocument(name, text);                
-            }            
-            else
-            {
-                document = document.WithText(text);
-            }
-
-            workspace.TryApplyChanges(document.Project.Solution);
+            return project;
         }
 
         ////    //this.dte = (DTE2)ServiceProvider.GetService(typeof(DTE2));
