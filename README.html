@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Commerce Runtime Handyman</title>
+</head>
+<body>
+
+    <h1 id="commerce-runtime-handyman">Commerce Runtime Handyman</h1>
+<p>A Visual Studio extension to automate code authoring for the <a href="https://ax.help.dynamics.com/en/wiki/commerce-runtime-overview/">Microsoft Dynamics AX Commerce Runtime</a> framework.</p>
+<p>Please report any issues <a href="https://github.com/andreesteve/crthandyman/issues">here</a>.</p>
+<h2 id="supported-versions">Supported versions</h2>
+<p>Currently supporting:</p>
+<ul>
+<li>Visual Studio 2017 15.1 (26403.7)</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li>Set default project for creation of <em>request</em> and <em>response</em> classes</li>
+<li>Create <em>request</em> and <em>response</em> classes out of method definition, including documentation</li>
+</ul>
+<h2 id="quick-start">Quick start</h2>
+<ol>
+<li>Set a default project in the solution where <em>request and reponse</em> classes are to be created in
+by right clicking on the project in the solution explorer and selecting <strong>Commerce Runtime Handyman -&gt; Set as default Request-Response project</strong>*</li>
+</ol>
+<p><img src="docs/imgs/set_default_project.png" alt="Set default project" /></p>
+<ol start="2">
+<li>Use the light bulb suggestion <strong>Create or update request/response</strong> to generate request response classes out of a method definition</li>
+</ol>
+<p><img src="docs/imgs/create-request-response.png" alt="Create request-response out off method" /></p>
+<p>For this snippet:</p>
+<pre><code class="language-csharp">/// &lt;summary&gt;
+/// Gets a product.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;productId&quot;&gt;The product id.&lt;/param&gt;
+/// &lt;param name=&quot;someOtherResponseData&quot;&gt;The first result.&lt;/param&gt;
+/// &lt;returns&gt;The found product.&lt;/returns&gt;
+public Product GetProducts(long productId, out string someOtherResponseData)
+{
+    someOtherResponseData = &quot;I will be on the response definition as well&quot;;
+    return new Product();
+}
+</code></pre>
+<p>The following request will be generated:</p>
+<pre><code class="language-csharp">/// &lt;summary&gt;
+/// Gets a product.
+/// &lt;/summary&gt;
+public class GetProductsRequest : IRequest
+{
+    /// &lt;summary&gt;
+    /// Initializes a new instance of the &lt;see cref=&quot;GetProductsRequest&quot;/&gt; class.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;productId&quot;&gt;The product id.&lt;/param&gt;
+    public GetProductsRequest(long productId)
+    {
+        this.ProductId = productId;
+    }    
+
+    /// &lt;summary&gt;
+    /// Gets the product id.
+    /// &lt;/summary&gt;
+    public long ProductId { get; private set; }
+}
+</code></pre>
+<p>And following response will be generated:</p>
+<pre><code class="language-csharp">/// &lt;summary&gt;
+/// The response for &lt;see cref=&quot;{GetProductsRequest}&quot; /&gt;.
+/// &lt;/summary&gt;
+public class GetProductsResponse : IResponse
+{
+    /// &lt;summary&gt;
+    /// Initializes a new instance of the &lt;see cref=&quot;GetProductsResponse&quot;/&gt; class.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;Product&quot;&gt;The found product.&lt;/param&gt;
+    /// &lt;param name=&quot;someOtherResponseData&quot;&gt;The first result.&lt;/param&gt;
+    public GetProductsResponse(Product product, string someOtherResponseData)
+    {
+        this.Product = product;
+        this.SomeOtherResponseData = someOtherResponseData;
+    }    
+
+    /// &lt;summary&gt;
+    /// Gets the found product.
+    /// &lt;/summary&gt;
+    public Product Product { get; private set; }
+
+    /// &lt;summary&gt;
+    /// Gets the first result.
+    /// &lt;/summary&gt;
+    public string SomeOtherResponseData { get; private set; }
+}
+</code></pre>
+<h2 id="settings">Settings</h2>
+<p>You can configure the extension settings at <strong>Tools -&gt; Options -&gt; Commerce Runtime Handyman</strong></p>
+<p><img src="docs/imgs/options_view.png" alt="Handyman settings" /></p>
+<h2 id="contributing">Contributing</h2>
+<p>Please report issues and submit open pull requests <a href="https://github.com/andreesteve/crthandyman">here</a>.</p>
+<p>To build and run the extension, you will need to <a href="https://msdn.microsoft.com/en-us/library/mt683786.aspx">install Visual Studio SDK</a>.</p>
+
+
+</body>
+</html>

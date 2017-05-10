@@ -96,3 +96,15 @@ public class GetProductsResponse : IResponse
     public string SomeOtherResponseData { get; private set; }
 }
 ```
+
+## Settings
+
+You can configure the extension settings at **Tools -> Options -> Commerce Runtime Handyman**
+
+![Handyman settings](docs/imgs/options_view.png)
+
+## Contributing
+
+Please report issues and submit open pull requests [here](https://github.com/andreesteve/crthandyman).
+
+To build and run the extension, you will need to [install Visual Studio SDK](https://msdn.microsoft.com/en-us/library/mt683786.aspx).

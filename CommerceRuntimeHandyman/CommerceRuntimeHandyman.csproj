@@ -79,7 +79,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="index.html">
+    <Content Include="..\LICENSE.txt">
+      <Link>LICENSE.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\README.html">
+      <Link>README.html</Link>
+      <DependentUpon>README.md</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

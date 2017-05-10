@@ -4,8 +4,9 @@
     <Identity Id="CommerceRuntimeHandyman" Version="0.1.0" Language="en-US" Publisher="Andre Esteve" />
     <DisplayName>Commerce Runtime Handyman</DisplayName>
     <Description xml:space="preserve">Automate your code authoring when working with Microsoft's Dynamics AX Commerce Runtime framework.</Description>
-    <MoreInfo>    https://github.com/andreesteve/crthandyman</MoreInfo>
-    <GettingStartedGuide>index.html</GettingStartedGuide>
+    <MoreInfo>https://github.com/andreesteve/crthandyman</MoreInfo>
+    <License>LICENSE.txt</License>
+    <GettingStartedGuide>README.html</GettingStartedGuide>
     <Tags>Commerce Runtime, Dynamics AX, Commerce Runtime, Dynamics 365</Tags>
   </Metadata>
   <Installation>
