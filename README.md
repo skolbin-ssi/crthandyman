@@ -10,6 +10,12 @@ Currently supporting:
 
 * Visual Studio 2017 15.1 (26403.7)
 
+## Installation
+
+You can install it:
+ * from the [Visual Studio Gallery page](https://marketplace.visualstudio.com/vsgallery/fa0e1a03-00a7-45db-a6ef-dab456be41fd)
+ * or by searching by **Commerce Runtime Handyman** in *Visual Studio -> Tools -> Extensions and Updates*
+
 ## Features
 
 * Set default project for creation of *request* and *response* classes
