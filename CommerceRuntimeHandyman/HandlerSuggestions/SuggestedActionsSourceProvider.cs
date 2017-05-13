@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.Composition;
+using System.Linq;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
@@ -21,7 +23,8 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
                 return null;
             }
 
-            return new SuggestedActionsSource(this.workspaceManager.Manager);
+            var document = textBuffer.GetRelatedDocuments().First();
+            return new SuggestedActionsSource(this.workspaceManager.Manager, document);
         }
     }
 }

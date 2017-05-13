@@ -12,32 +12,22 @@ namespace Handyman.Analyzers
 {
     public class RequestHandlerAnalyzer
     {
-        private Document document;
+        private AnalysisContext context;
 
-        public RequestHandlerAnalyzer(Document document)
+        public RequestHandlerAnalyzer(AnalysisContext context)
         {
-            this.document = document ?? throw new ArgumentNullException(nameof(document));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<RequestHandlerDefinition> TryGetHandlerDefinition(int tokenPosition, CancellationToken cancellationToken)
+        public RequestHandlerDefinition TryGetHandlerDefinition(MethodDeclarationSyntax methodDeclarationSyntax)
         {
-            var semanticModel = await this.document.GetSemanticModelAsync(cancellationToken);
-            var syntaxTree = await semanticModel.SyntaxTree.GetRootAsync(cancellationToken);
-            var token = syntaxTree.FindToken(tokenPosition);
+            var semanticModel = context.SemanticModel;
 
-            foreach (var node in token.Parent.AncestorsAndSelf())
+            if (methodDeclarationSyntax != null)
             {
-                Type nodeType = node.GetType();
-                if (nodeType == typeof(MethodDeclarationSyntax))
-                {
-                    var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(node);
-                    return RequestHandlerDefinition.TryParse(methodSymbol);
-                }
-                else if (nodeType == typeof(BlockSyntax))
-                {
-                    return null;
-                }
-            }
+                var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclarationSyntax);
+                return RequestHandlerDefinition.TryParse(methodSymbol);
+            }            
 
             return null;
         }

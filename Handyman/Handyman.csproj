@@ -155,8 +155,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzers\AnalysisContext.cs" />
     <Compile Include="Analyzers\DocumentationAnalyzer.cs" />
     <Compile Include="Analyzers\RequestHandlerAnalyzer.cs" />
+    <Compile Include="Analyzers\SyntaxExtensions.cs" />
     <Compile Include="Generators\MemberedTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

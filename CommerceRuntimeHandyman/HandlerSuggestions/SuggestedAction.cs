@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Handyman.Analyzers;
 using Handyman.Generators;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.Imaging.Interop;
 using Microsoft.VisualStudio.Language.Intellisense;
 
@@ -27,12 +29,18 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
 
         ImageMoniker ISuggestedAction.IconMoniker => default(ImageMoniker);
 
-        private RequestHandlerDefinition requestHandler;
-        private WorkspaceManager workspaceManager;
+        private readonly Document document;
+        private readonly int tokenPosition;
+        private readonly WorkspaceManager workspaceManager;
 
-        public SuggestedAction(WorkspaceManager workspaceManager, RequestHandlerDefinition requestHandler)
+        private bool? canRun;
+        private MethodDeclarationSyntax methodSyntax;
+        private AnalysisContext context;        
+
+        public SuggestedAction(WorkspaceManager workspaceManager, Document document, int tokenPosition)
         {
-            this.requestHandler = requestHandler;
+            this.document = document;
+            this.tokenPosition = tokenPosition;
             this.workspaceManager = workspaceManager;
         }
 
@@ -50,11 +58,32 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
             return Task.FromResult<object>(null);
         }
 
+        public async Task<bool> CanRun(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (this.canRun == null)
+            {
+                this.context = this.context ?? await AnalysisContext.Create(this.document, cancellationToken);
+                this.methodSyntax = this.context.SyntaxRoot.TryGetMethodDeclaratioNearPosition(this.tokenPosition);
+                this.canRun = this.methodSyntax != null;
+            }
+
+            return this.canRun.Value;
+        }
+
         public void Invoke(CancellationToken cancellationToken)
         {
-            if (!this.workspaceManager.CreateOrUpdateRequestHandlerDefinition(this.requestHandler))
+            if (this.CanRun(cancellationToken).Result)
             {
-                MessageBox.Show("Couldn't apply changes to project");
+                var requestHandlerDefinition = new RequestHandlerAnalyzer(this.context).TryGetHandlerDefinition(this.methodSyntax);
+
+                if (requestHandlerDefinition == null)
+                {
+                    MessageBox.Show("This method cannot be converted into a request handler.");
+                }
+                else if (!this.workspaceManager.CreateOrUpdateRequestHandlerDefinition(requestHandlerDefinition))
+                {
+                    MessageBox.Show("Couldn't apply changes to project");
+                }
             }
         }
 
