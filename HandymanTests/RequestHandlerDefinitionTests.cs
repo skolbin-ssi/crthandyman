@@ -132,5 +132,40 @@ namespace Handyman.Tests
             Assert.AreEqual("The response for {DoWorkRequest}.", definition.ResponseType.Documentation);
             Assert.AreEqual(string.Empty, definition.ResponseType.Members.First().Documentation);
         }
+
+        [TestMethod]
+        public void TryParse_UnwrapTask_ValidMethod()
+        {
+            var code = @"
+            using System.Threading.Tasks;
+            class HandlerTest
+            {
+                public Task<int> DoWork(Task<bool> value)
+                {
+                    return null;
+                }
+            }";
+
+            SyntaxTree tree;
+            var compilation = RoslynHelper.Compile(code, out tree);
+            var semanticModel = compilation.GetSemanticModel(tree);
+
+            var methodDeclaration = tree.GetRoot()
+                .DescendantNodes()
+                .OfType<MethodDeclarationSyntax>()
+                .First();
+
+            var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
+            var definition = RequestHandlerDefinition.TryParse(methodSymbol);
+
+            Assert.IsNotNull(definition);
+
+            Assert.IsNotNull(definition.RequestType);
+            Assert.AreEqual("Boolean", definition.RequestType.Members.First().Type.Name);            
+
+            Assert.IsNotNull(definition.ResponseType);
+            Assert.AreEqual("Int32", definition.ResponseType.Members.First().Type.Name);
+            Assert.AreEqual("Result", definition.ResponseType.Members.First().Name);
+        }
     }
 }

@@ -67,14 +67,60 @@ namespace Handyman.Types
             return null;
         }
 
+        private static ITypeSymbol UnwrapTaskType(ITypeSymbol type)
+        {
+            if (type is INamedTypeSymbol)
+            {
+                INamedTypeSymbol namedType = (INamedTypeSymbol)type;
+                if (namedType.IsGenericType && namedType.ToString().StartsWith("System.Threading.Tasks.Task"))
+                {
+                    return namedType.TypeArguments.First();
+                }
+            }
+
+            return type;
+        }
+
         private static Member CreateMemberFromParameter(IParameterSymbol parameter, DocumentationAnalyzer doc)
         {           
-            return new Member(parameter.Name, parameter.Type, doc.GetParameter(parameter.Name));
+            return new Member(parameter.Name, UnwrapTaskType(parameter.Type), doc.GetParameter(parameter.Name));
         }
 
         private static Member CreateMemberFromReturnType(ITypeSymbol type, DocumentationAnalyzer doc)
         {
-            return new Member(type.Name, type, doc.Returns);
+            type = UnwrapTaskType(type);
+            string name = type.Name;
+
+            if (IsPrimitive(type))
+            {
+                name = "Result";
+            }
+
+            return new Member(name, type, doc.Returns);
+        }
+
+        private static bool IsPrimitive(ITypeSymbol type)
+        {
+            switch (type.SpecialType)
+            {
+                case SpecialType.System_Boolean:
+                case SpecialType.System_SByte:
+                case SpecialType.System_Int16:
+                case SpecialType.System_Int32:
+                case SpecialType.System_Int64:
+                case SpecialType.System_Byte:
+                case SpecialType.System_UInt16:
+                case SpecialType.System_UInt32:
+                case SpecialType.System_UInt64:
+                case SpecialType.System_Single:
+                case SpecialType.System_Double:
+                case SpecialType.System_Char:
+                case SpecialType.System_String:
+                case SpecialType.System_Object:
+                    return true;
+            }
+
+            return false;
         }
     }
 }
