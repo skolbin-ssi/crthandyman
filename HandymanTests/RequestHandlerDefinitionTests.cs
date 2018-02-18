@@ -11,6 +11,10 @@ namespace Handyman.Tests
     [TestClass]
     public class RequestHandlerDefinitionTests
     {
+        private static readonly CommerceRuntimeReference Reference = new CommerceRuntimeReference()
+        {
+        };
+
         [TestMethod]
         public void TryParse_ValidMethod()
         {
@@ -42,7 +46,7 @@ namespace Handyman.Tests
 
             var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
 
-            var definition = RequestHandlerDefinition.TryParse(methodSymbol);
+            var definition = RequestHandlerDefinition.TryParse(methodSymbol, Reference);
 
             Assert.IsNotNull(definition);
 
@@ -84,7 +88,7 @@ namespace Handyman.Tests
 
             var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
 
-            var definition = RequestHandlerDefinition.TryParse(methodSymbol);
+            var definition = RequestHandlerDefinition.TryParse(methodSymbol, Reference);
 
             Assert.IsNotNull(definition);
 
@@ -120,7 +124,7 @@ namespace Handyman.Tests
 
             var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
 
-            var definition = RequestHandlerDefinition.TryParse(methodSymbol);
+            var definition = RequestHandlerDefinition.TryParse(methodSymbol, Reference);
 
             Assert.IsNotNull(definition);
 
@@ -156,7 +160,7 @@ namespace Handyman.Tests
                 .First();
 
             var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
-            var definition = RequestHandlerDefinition.TryParse(methodSymbol);
+            var definition = RequestHandlerDefinition.TryParse(methodSymbol, Reference);
 
             Assert.IsNotNull(definition);
 

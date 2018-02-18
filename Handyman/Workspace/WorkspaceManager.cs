@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Handyman;
 using Handyman.Generators;
+using Handyman.ProjectAnalyzers;
 using Handyman.Settings;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;

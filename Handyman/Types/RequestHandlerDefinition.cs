@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using Handyman.Analyzers;
+using Handyman.DocumentAnalyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -29,7 +29,7 @@ namespace Handyman.Types
 
         public ResponseType ResponseType { get; private set; }
 
-        public static RequestHandlerDefinition TryParse(IMethodSymbol method)
+        public static RequestHandlerDefinition TryParse(IMethodSymbol method, CommerceRuntimeReference reference)
         {
             // method needs to belong to class
             if (method.ContainingSymbol != null)
@@ -42,7 +42,7 @@ namespace Handyman.Types
                     .Where(p => p.RefKind == RefKind.None)
                     .Select(p => CreateMemberFromParameter(p, doc));
 
-                var requestType = new RequestType(method.Name + "Request", requetMembers, doc.Summary);
+                var requestType = new RequestType(method.Name + "Request", requetMembers, doc.Summary, reference.RequestBaseClassFqn);
 
                 // RESPONSE
                 var responseMembers = method.Parameters
@@ -58,8 +58,8 @@ namespace Handyman.Types
                 string responseDocumentation = $"The response for <see cref=\"{{{requestType.Name}}}\" />.";
 
                 ResponseType responseType = responseMembers.Any()
-                    ? new ResponseType(method.Name + "Response", responseMembers, responseDocumentation)
-                    : ResponseType.VoidResponse;
+                    ? new ResponseType(method.Name + "Response", responseMembers, responseDocumentation, reference.ResponseBaseClassFqn)
+                    : reference.VoidResponse;
 
                 return new RequestHandlerDefinition(requestType, responseType, method);
             }

@@ -8,7 +8,7 @@ using Handyman.Types;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Handyman.Analyzers
+namespace Handyman.DocumentAnalyzers
 {
     public class RequestHandlerAnalyzer
     {
@@ -26,7 +26,7 @@ namespace Handyman.Analyzers
             if (methodDeclarationSyntax != null)
             {
                 var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclarationSyntax);
-                return RequestHandlerDefinition.TryParse(methodSymbol);
+                return RequestHandlerDefinition.TryParse(methodSymbol, context.CommerceRuntimeReference);
             }            
 
             return null;

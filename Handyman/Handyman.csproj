@@ -155,10 +155,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analyzers\AnalysisContext.cs" />
-    <Compile Include="Analyzers\DocumentationAnalyzer.cs" />
-    <Compile Include="Analyzers\RequestHandlerAnalyzer.cs" />
-    <Compile Include="Analyzers\SyntaxExtensions.cs" />
+    <Compile Include="CommerceRuntimeReference.cs" />
+    <Compile Include="DocumentAnalyzers\AnalysisContext.cs" />
+    <Compile Include="DocumentAnalyzers\DocumentationAnalyzer.cs" />
+    <Compile Include="DocumentAnalyzers\RequestHandlerAnalyzer.cs" />
+    <Compile Include="DocumentAnalyzers\SyntaxExtensions.cs" />
     <Compile Include="Generators\MemberedTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -166,6 +167,7 @@
     </Compile>
     <Compile Include="Generators\MemberedTemplatePartial.cs" />
     <Compile Include="Generators\MemberedTypeGenerator.cs" />
+    <Compile Include="ProjectAnalyzers\CommerceRuntimeReferenceAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\IGlobalSettings.cs" />
     <Compile Include="Settings\IWorkspaceSettings.cs" />

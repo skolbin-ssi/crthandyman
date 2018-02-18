@@ -13,22 +13,11 @@ namespace Handyman.Types
     /// </summary>
     public class ResponseType : MemberedBaseType
     {
-        /// <summary>
-        /// Represents a void response (i.e. no response).
-        /// </summary>
-        public static readonly ResponseType VoidResponse = new ResponseType("NullResponse", new Member[0], string.Empty);
-
-        public ResponseType(string name, IEnumerable<Member> members, string documentation)
-            : base(name, SettingsManager.Instance.RequestInterfaceFQN, members, documentation)
+        public ResponseType(string name, IEnumerable<Member> members, string documentation, string baseClassFQN)
+            : base(name, baseClassFQN, members, documentation)
         {
         }
 
-        public bool IsVoidResponse
-        {
-            get
-            {
-                return this == VoidResponse;
-            }
-        }
+        public bool IsVoidResponse { get; set; } = false;
     }
 }
