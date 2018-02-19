@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Handyman;
 using Handyman.DocumentAnalyzers;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;

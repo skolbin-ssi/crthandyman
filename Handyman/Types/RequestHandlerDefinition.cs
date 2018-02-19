@@ -67,6 +67,17 @@ namespace Handyman.Types
             return null;
         }
 
+        public void SetContainingNamespace(string containingNamespace)
+        {
+            if (string.IsNullOrWhiteSpace(containingNamespace))
+            {
+                throw new ArgumentNullException(nameof(containingNamespace));
+            }
+
+            this.RequestType.Namespace = containingNamespace;
+            this.ResponseType.Namespace = containingNamespace;
+        }
+
         private static ITypeSymbol UnwrapTaskType(ITypeSymbol type)
         {
             if (type is INamedTypeSymbol)

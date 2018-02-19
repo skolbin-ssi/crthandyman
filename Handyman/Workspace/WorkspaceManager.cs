@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Handyman;
 using Handyman.Generators;
-using Handyman.ProjectAnalyzers;
 using Handyman.Settings;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.Text;
 
-namespace CommerceRuntimeHandyman
+namespace Handyman
 {
     public class WorkspaceManager
     {
-        private Workspace workspace;
-        private IWorkspaceSettings settings;
+        private readonly Workspace workspace;
+        private readonly IHostService hostServices;
 
-        public WorkspaceManager(Workspace workspace, IWorkspaceSettings settings)
+        private IWorkspaceSettings settings;        
+
+        public WorkspaceManager(Workspace workspace, IWorkspaceSettings settings, IHostService hostServices)
         {
             this.workspace = workspace;
             this.Settings = settings;
+            this.hostServices = hostServices;
             this.SettingsHaveChanged = false;
         }
 
@@ -51,8 +52,15 @@ namespace CommerceRuntimeHandyman
 
             Project project = this.GetProjectByNameOrThrow(requestProjectName);
 
+            var defaultNamespace = this.hostServices.GetDefaultNamespace(project.Name);
+            if (!string.IsNullOrWhiteSpace(defaultNamespace))
+            {
+                requestHandler.SetContainingNamespace(defaultNamespace);
+            }            
+
             string requestCode = generator.GenerateSyntax(requestHandler.RequestType);
             var document = this.CreateOrUpdateDocument(project, requestHandler.RequestType.Name, requestCode);
+
             project = document.Project;
 
             if (!requestHandler.ResponseType.IsVoidResponse)

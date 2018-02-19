@@ -30,7 +30,7 @@ namespace Handyman.DocumentAnalyzers
                 {
                     return (MethodDeclarationSyntax)node;
                 }
-                else if (nodeType == typeof(BlockSyntax))
+                else if (nodeType == typeof(ClassDeclarationSyntax))
                 {
                     return null;
                 }

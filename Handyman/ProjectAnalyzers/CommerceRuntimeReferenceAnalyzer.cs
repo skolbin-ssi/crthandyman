@@ -44,7 +44,8 @@ namespace Handyman.ProjectAnalyzers
                 ResponseBaseClassFqn = _namespace != null ? $"{_namespace}.Response" : Settings.SettingsManager.Instance.ResponseInterfaceFQN ?? string.Empty,
                 VoidResponse = new ResponseType("NullResponse", new Member[0], string.Empty, _namespace)
                 {
-                    IsVoidResponse = true
+                    IsVoidResponse = true,
+                    Namespace = _namespace
                 }
             };
 

@@ -17,6 +17,7 @@ namespace Handyman.Types
             this.Members = new List<Member>(members);
             this.BaseClassName = baseClassName;
             this.Documentation = documentation;
+            this.Namespace = string.Empty;
         }
 
         public string Name { get; set; }
@@ -26,5 +27,7 @@ namespace Handyman.Types
         public string Documentation { get; private set; }
 
         public string BaseClassName { get; private set; }
+
+        public string Namespace { get; set; }
     }
 }

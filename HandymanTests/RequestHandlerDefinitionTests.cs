@@ -55,7 +55,7 @@ namespace Handyman.Tests
             Assert.AreEqual("This is the argument documentation.", definition.RequestType.Members.First().Documentation);
 
             Assert.IsNotNull(definition.ResponseType);
-            Assert.AreEqual("The response for {DoWorkRequest}.", definition.ResponseType.Documentation);
+            Assert.AreEqual("The response for <see cref=\"{DoWorkRequest}\" />.", definition.ResponseType.Documentation);
             Assert.AreEqual("This is the return documentation.", definition.ResponseType.Members.First().Documentation);
         }
 
@@ -97,7 +97,7 @@ namespace Handyman.Tests
             Assert.AreEqual(string.Empty, definition.RequestType.Members.First().Documentation);
 
             Assert.IsNotNull(definition.ResponseType);
-            Assert.AreEqual("The response for {DoWorkRequest}.", definition.ResponseType.Documentation);
+            Assert.AreEqual("The response for <see cref=\"{DoWorkRequest}\" />.", definition.ResponseType.Documentation);
             Assert.AreEqual(string.Empty, definition.ResponseType.Members.First().Documentation);
         }
 
@@ -133,7 +133,7 @@ namespace Handyman.Tests
             Assert.AreEqual(string.Empty, definition.RequestType.Members.First().Documentation);
 
             Assert.IsNotNull(definition.ResponseType);
-            Assert.AreEqual("The response for {DoWorkRequest}.", definition.ResponseType.Documentation);
+            Assert.AreEqual("The response for <see cref=\"{DoWorkRequest}\" />.", definition.ResponseType.Documentation);
             Assert.AreEqual(string.Empty, definition.ResponseType.Members.First().Documentation);
         }
 

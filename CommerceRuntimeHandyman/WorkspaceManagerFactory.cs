@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Linq;
+using EnvDTE;
+using Handyman;
 using Handyman.Settings;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
@@ -16,8 +18,11 @@ namespace CommerceRuntimeHandyman
         [ImportingConstructor]
         public WorkspaceManagerFactory([Import(typeof(SVsServiceProvider), AllowDefault = true)] IServiceProvider vsServiceProvider, [Import(typeof(VisualStudioWorkspace), AllowDefault = true)] Workspace vsWorkspace)
         {
+            DTE dte = (DTE)vsServiceProvider.GetService(typeof(DTE));
+            VsHostService vsServices = new VsHostService(dte);
+
             // start with empty settings
-            this.Manager = new WorkspaceManager(vsWorkspace, new WorkspaceSettings());
+            this.Manager = new WorkspaceManager(vsWorkspace, new WorkspaceSettings(), vsServices);
         }
 
         public void InitializeWorkspaceSettings (WorkspaceSettings settings)

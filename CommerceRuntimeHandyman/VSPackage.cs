@@ -108,7 +108,6 @@ namespace CommerceRuntimeHandyman
 
                 Project selectedProject = selectedObject as Project;
 
-
                 var factory = this.GetWorkspaceFactory();
                 WorkspaceSettings settings = (WorkspaceSettings)factory.Manager.Settings;
                 settings.DefaultRequestProjectName = selectedProject.Name;

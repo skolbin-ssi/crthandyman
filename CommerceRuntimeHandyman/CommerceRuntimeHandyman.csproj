@@ -64,6 +64,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Settings\ProviderSolutionPropertiesAttribute.cs" />
+    <Compile Include="VsHostService.cs" />
     <Compile Include="VSPackage.cs" />
     <Compile Include="WorkspaceManagerFactory.cs" />
   </ItemGroup>
