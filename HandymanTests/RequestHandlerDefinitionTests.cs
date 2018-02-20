@@ -46,7 +46,7 @@ namespace Handyman.Tests
 
             var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
 
-            var definition = RequestHandlerDefinition.TryParse(methodSymbol, Reference);
+            var definition = RequestHandlerMethodDefinition.TryParse(methodSymbol, Reference);
 
             Assert.IsNotNull(definition);
 
@@ -88,7 +88,7 @@ namespace Handyman.Tests
 
             var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
 
-            var definition = RequestHandlerDefinition.TryParse(methodSymbol, Reference);
+            var definition = RequestHandlerMethodDefinition.TryParse(methodSymbol, Reference);
 
             Assert.IsNotNull(definition);
 
@@ -124,7 +124,7 @@ namespace Handyman.Tests
 
             var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
 
-            var definition = RequestHandlerDefinition.TryParse(methodSymbol, Reference);
+            var definition = RequestHandlerMethodDefinition.TryParse(methodSymbol, Reference);
 
             Assert.IsNotNull(definition);
 
@@ -160,7 +160,7 @@ namespace Handyman.Tests
                 .First();
 
             var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclaration);
-            var definition = RequestHandlerDefinition.TryParse(methodSymbol, Reference);
+            var definition = RequestHandlerMethodDefinition.TryParse(methodSymbol, Reference);
 
             Assert.IsNotNull(definition);
 

@@ -35,6 +35,8 @@ namespace Handyman.ProjectAnalyzers
 
             this.compilation = await this.project.GetCompilationAsync(cancellationToken);
             var requestType = this.compilation.GetTypeByMetadataName("Microsoft.Dynamics.Commerce.Runtime.Messages.Request");
+            var responseType = this.compilation.GetTypeByMetadataName("Microsoft.Dynamics.Commerce.Runtime.Messages.Response");
+            var requestHandlerInterfaceType = this.compilation.GetTypeByMetadataName("Microsoft.Dynamics.Commerce.Runtime.IRequestHandler");
 
             string _namespace = requestType?.ContainingNamespace.ToString();
 
@@ -42,6 +44,9 @@ namespace Handyman.ProjectAnalyzers
             {
                 RequestBaseClassFqn = _namespace != null ? $"{_namespace}.Request" : Settings.SettingsManager.Instance.RequestInterfaceFQN ?? string.Empty,
                 ResponseBaseClassFqn = _namespace != null ? $"{_namespace}.Response" : Settings.SettingsManager.Instance.ResponseInterfaceFQN ?? string.Empty,
+                RequestTypeSymbol = requestType,
+                ResponseTypeSymbol = responseType,
+                IRequestHandlerTypeSymbol = requestHandlerInterfaceType,
                 VoidResponse = new ResponseType("NullResponse", new Member[0], string.Empty, _namespace)
                 {
                     IsVoidResponse = true,

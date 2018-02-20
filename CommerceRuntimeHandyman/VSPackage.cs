@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using CommerceRuntimeHandyman.Editor.Commands;
 using CommerceRuntimeHandyman.Settings;
 using EnvDTE;
 using Handyman.Settings;
@@ -75,7 +76,7 @@ namespace CommerceRuntimeHandyman
         {
             base.Initialize();
             ((OptionPageGrid)this.GetDialogPage(typeof(OptionPageGrid))).UpdateSettings();
-            
+
             var mcs = (OleMenuCommandService)GetService(typeof(IMenuCommandService));
             var commandId = new CommandID(typeof(Commands).GUID, (int)Commands.SetRequestProjectCommand);
             mcs.AddCommand(new MenuCommand(delegate {
@@ -115,6 +116,7 @@ namespace CommerceRuntimeHandyman
                 factory.Manager.Settings = settings;
 
             }, commandId));
+            GoToRequestHandlerImplementation.Initialize(this);
         }
 
         public int SaveUserOptions(IVsSolutionPersistence pPersistence)

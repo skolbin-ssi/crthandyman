@@ -158,10 +158,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommerceRuntimeReference.cs" />
+    <Compile Include="DocumentAnalyzers\CommerceRuntimeReference.cs" />
     <Compile Include="DocumentAnalyzers\AnalysisContext.cs" />
     <Compile Include="DocumentAnalyzers\DocumentationAnalyzer.cs" />
     <Compile Include="DocumentAnalyzers\RequestHandlerAnalyzer.cs" />
+    <Compile Include="DocumentAnalyzers\RequestResponseTypeAnalyzer.cs" />
+    <Compile Include="DocumentAnalyzers\SemanticExtensions.cs" />
     <Compile Include="DocumentAnalyzers\SyntaxExtensions.cs" />
     <Compile Include="Generators\MemberedTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -181,6 +183,7 @@
     <Compile Include="Types\Member.cs" />
     <Compile Include="Types\MemberedBaseType.cs" />
     <Compile Include="Types\RequestHandlerDefinition.cs" />
+    <Compile Include="Types\RequestHandlerMethodDefinition.cs" />
     <Compile Include="Types\RequestType.cs" />
     <Compile Include="Types\ResponseType.cs" />
     <Compile Include="Workspace\WorkspaceManager.cs" />

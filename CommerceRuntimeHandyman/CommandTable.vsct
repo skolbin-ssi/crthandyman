@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <Extern href="stdidcmd.h"/>
-  <Extern href="vsshlids.h"/>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
 
   <Commands package="guidVSPackage2Pkg">
     <Groups>
       <Group guid="guidVSPackage2CmdSet" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE" />
       </Group>
 
       <Group guid="guidVSPackage2CmdSet" id="SubMenuGroup" priority="0x0602">
         <Parent guid="guidVSPackage2CmdSet" id="SubMenu" />
+      </Group>
+      <Group guid="guidVSPackageCmdSet" id="CoreEditorMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
       </Group>
     </Groups>
 
@@ -32,11 +34,21 @@
           <ButtonText>Set as default Request-Response project</ButtonText>
         </Strings>
       </Button>
+      <Button guid="guidVSPackageCmdSet" id="cmdidGoToRequestHandlerImplementation" priority="0x0100" type="Button">
+        <Parent guid="guidVSPackageCmdSet" id="CoreEditorMenuGroup" />
+        <Icon guid="goToRequestHandlerImplementationImage" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Navigate to request handler's implementation</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
 
     <!--<Bitmaps>
       <Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows"/>
     </Bitmaps>-->
+    <Bitmaps>
+      <Bitmap guid="goToRequestHandlerImplementationImage" href="Resources\GoToRequestHandlerImplementation.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+    </Bitmaps>
   </Commands>
   <Symbols>
     <!-- This is the package guid. -->
@@ -44,13 +56,27 @@
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidVSPackage2CmdSet" value="{9cfc9dda-a054-4ff2-8c85-e6d2bff04874}">
-      <IDSymbol name="SubMenu" value="0x1001"/>
-      <IDSymbol name="SubMenuGroup" value="0x1000"/>
+      <IDSymbol name="SubMenu" value="0x1001" />
+      <IDSymbol name="SubMenuGroup" value="0x1000" />
       <IDSymbol name="MyMenuGroup" value="0x1020" />
       <IDSymbol name="cmdidMyCommand" value="0x0100" />
     </GuidSymbol>
 
-    <GuidSymbol name="guidImages" value="{b77d6bb1-566b-4ecb-a99f-9f99325ffd65}" >
+    <GuidSymbol name="guidImages" value="{b77d6bb1-566b-4ecb-a99f-9f99325ffd65}">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{2ac1dc24-8580-43c7-b0fa-0be7b5bd8b0b}" name="guidVSPackageCmdSet">
+      <IDSymbol value="4128" name="CoreEditorMenuGroup" />
+      <IDSymbol value="256" name="cmdidGoToRequestHandlerImplementation" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{8c70a53a-c41d-41dc-94fd-a82fe5f2f5be}" name="goToRequestHandlerImplementationImage">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

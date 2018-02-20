@@ -44,7 +44,7 @@ namespace Handyman
             set;
         }
 
-        public bool CreateOrUpdateRequestHandlerDefinition(RequestHandlerDefinition requestHandler)
+        public bool CreateOrUpdateRequestHandlerDefinition(RequestHandlerMethodDefinition requestHandler)
         {
             var generator = new MemberedTypeGenerator();
 
