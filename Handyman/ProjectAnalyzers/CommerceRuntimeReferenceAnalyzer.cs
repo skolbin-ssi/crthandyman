@@ -12,7 +12,7 @@ namespace Handyman.ProjectAnalyzers
     /// </summary>
     public sealed class CommerceRuntimeReferenceAnalyzer
     {
-        private static CommerceRuntimeReference CachedReference = null;
+        ////private static CommerceRuntimeReference CachedReference = null;
 
         private readonly Project project;
         private Compilation compilation;
@@ -28,10 +28,13 @@ namespace Handyman.ProjectAnalyzers
         /// <returns>The commerce runtime reference.</returns>
         public async Task<CommerceRuntimeReference> Find(CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (CachedReference != null)
-            {
-                return CachedReference;
-            }
+            // TODO: it seems that the types found on different compilations (despite being idential) do not implement Equality
+            // this is, CommerceRuntimeReference.RequestTypeSymbol.Equals(a request symbol from another compilation) -> false
+            // this affects some flows - need to review what is the best approach to do this
+            ////if (CachedReference != null)
+            ////{
+            ////    return CachedReference;
+            ////}
 
             this.compilation = await this.project.GetCompilationAsync(cancellationToken);
             var requestType = this.compilation.GetTypeByMetadataName("Microsoft.Dynamics.Commerce.Runtime.Messages.Request");
@@ -54,11 +57,11 @@ namespace Handyman.ProjectAnalyzers
                 }
             };
 
-            if (requestType != null)
-            {
-                // cache if we found the assembly
-                CachedReference = reference;
-            }
+            ////if (requestType != null)
+            ////{
+            ////    // cache if we found the assembly
+            ////    CachedReference = reference;
+            ////}
 
             return reference;
         }
