@@ -30,11 +30,11 @@ namespace Handyman.DocumentAnalyzers
 
         public CommerceRuntimeReference CommerceRuntimeReference { get; private set; }
 
-        public static async Task<AnalysisContext> Create(Document document, CancellationToken cancellationToken)
+        public static async Task<AnalysisContext> Create(Document document, CancellationToken cancellationToken, CommerceRuntimeReference reference = null)
         {
             var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
             var syntaxRoot = await semanticModel.SyntaxTree.GetRootAsync(cancellationToken);
-            var reference = await new CommerceRuntimeReferenceAnalyzer(document.Project).Find(cancellationToken);
+            reference = reference ?? await new CommerceRuntimeReferenceAnalyzer(document.Project).Find(cancellationToken);
 
             return new AnalysisContext(document, semanticModel, syntaxRoot, reference);
         }

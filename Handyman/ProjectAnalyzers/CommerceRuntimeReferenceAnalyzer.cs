@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Handyman.Errors;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;
 
@@ -41,12 +42,17 @@ namespace Handyman.ProjectAnalyzers
             var responseType = this.compilation.GetTypeByMetadataName("Microsoft.Dynamics.Commerce.Runtime.Messages.Response");
             var requestHandlerInterfaceType = this.compilation.GetTypeByMetadataName("Microsoft.Dynamics.Commerce.Runtime.IRequestHandler");
 
-            string _namespace = requestType?.ContainingNamespace.ToString();
+            if (requestHandlerInterfaceType == null || requestType == null || responseType == null)
+            {
+                throw new HandymanErrorException(new Error("CannotResolveCommerceRuntimeReference", "A reference to the CommerceRuntime couldn't be found. Please make sure the CommerceRuntime is referenced on the project and there are no compilation errors."));
+            }
+
+            string _namespace = requestType.ContainingNamespace.ToString();
 
             var reference = new CommerceRuntimeReference()
             {
-                RequestBaseClassFqn = _namespace != null ? $"{_namespace}.Request" : Settings.SettingsManager.Instance.RequestInterfaceFQN ?? string.Empty,
-                ResponseBaseClassFqn = _namespace != null ? $"{_namespace}.Response" : Settings.SettingsManager.Instance.ResponseInterfaceFQN ?? string.Empty,
+                RequestBaseClassFqn = $"{_namespace}.Request",
+                ResponseBaseClassFqn = $"{_namespace}.Response",
                 RequestTypeSymbol = requestType,
                 ResponseTypeSymbol = responseType,
                 IRequestHandlerTypeSymbol = requestHandlerInterfaceType,

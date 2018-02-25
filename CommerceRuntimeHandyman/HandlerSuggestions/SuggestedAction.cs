@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Handyman;
 using Handyman.DocumentAnalyzers;
+using Handyman.Errors;
 using Handyman.Generators;
 using Handyman.Types;
 using Microsoft.CodeAnalysis;
@@ -63,9 +64,17 @@ namespace CommerceRuntimeHandyman.AssociateMethodWithRequest
         {
             if (this.canRun == null)
             {
-                this.context = this.context ?? await AnalysisContext.Create(this.document, cancellationToken);
-                this.methodSyntax = this.context.SyntaxRoot.TryGetMethodDeclaratioNearPosition(this.tokenPosition);
-                this.canRun = this.methodSyntax != null;
+                try
+                {
+                    this.context = this.context ?? await AnalysisContext.Create(this.document, cancellationToken);
+                    this.methodSyntax = this.context.SyntaxRoot.TryGetMethodDeclaratioNearPosition(this.tokenPosition);
+                    this.canRun = this.methodSyntax != null;
+                }
+                catch (HandymanErrorException)
+                {
+                    // TODO log it
+                    this.canRun = false;
+                }
             }
 
             return this.canRun.Value;

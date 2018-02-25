@@ -158,13 +158,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocumentAnalyzers\AnalysisContextFactory.cs" />
     <Compile Include="DocumentAnalyzers\CommerceRuntimeReference.cs" />
     <Compile Include="DocumentAnalyzers\AnalysisContext.cs" />
     <Compile Include="DocumentAnalyzers\DocumentationAnalyzer.cs" />
+    <Compile Include="Comparers\ITypeSymbolEqualityComparer.cs" />
     <Compile Include="DocumentAnalyzers\RequestHandlerAnalyzer.cs" />
     <Compile Include="DocumentAnalyzers\RequestResponseTypeAnalyzer.cs" />
     <Compile Include="DocumentAnalyzers\SemanticExtensions.cs" />
     <Compile Include="DocumentAnalyzers\SyntaxExtensions.cs" />
+    <Compile Include="Errors\Error.cs" />
+    <Compile Include="Errors\HandymanErrorException.cs" />
     <Compile Include="Generators\MemberedTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,6 +190,7 @@
     <Compile Include="Types\RequestHandlerMethodDefinition.cs" />
     <Compile Include="Types\RequestType.cs" />
     <Compile Include="Types\ResponseType.cs" />
+    <Compile Include="Types\TypeLocation.cs" />
     <Compile Include="Workspace\WorkspaceManager.cs" />
   </ItemGroup>
   <ItemGroup>

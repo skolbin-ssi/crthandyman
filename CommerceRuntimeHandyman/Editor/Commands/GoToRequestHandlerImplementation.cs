@@ -4,6 +4,7 @@ using System.Threading;
 using CommerceRuntimeHandyman.Editor.Extensions;
 using EnvDTE;
 using Handyman.DocumentAnalyzers;
+using Handyman.Errors;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -110,15 +111,18 @@ namespace CommerceRuntimeHandyman.Editor.Commands
 
                 try
                 {
-                    var handler = await new RequestResponseTypeAnalyzer(context).FindImplementation(position.Position, cancellationToken);
+                    var location = await new RequestResponseTypeAnalyzer(context).FindImplementation(position.Position, cancellationToken);
 
-                    if (handler != null)
+                    if (location != null)
                     {
                         var dte = (DTE)this.ServiceProvider.GetService(typeof(DTE));
-                        dte.ItemOperations.OpenFile(handler.Document.FilePath);
+                        dte.ItemOperations.OpenFile(location.Location.SourceTree.FilePath);
+
+                        // looks like lines are indexed at 0
+                        var line = location.Location.GetMappedLineSpan().StartLinePosition.Line + 1;
 
                         // TODO: implement focusing on line that implements method for request
-                        //dte.ExecuteCommand("Edit.Goto", "10");
+                        dte.ExecuteCommand("Edit.Goto", line.ToString());
                     }
                     else
                     {
@@ -129,6 +133,15 @@ namespace CommerceRuntimeHandyman.Editor.Commands
                 catch (OperationCanceledException)
                 {
                     message = "Operation cancelled due to time out.";
+                }
+                catch (HandymanErrorException exception)
+                {
+                    message = exception.Error.Message;
+                }
+                catch (Exception exception)
+                {
+                    // TODO log this
+                    message = $"An unhandled exception happened :(  {exception}";
                 }
 
                 if (!string.IsNullOrWhiteSpace(message))
