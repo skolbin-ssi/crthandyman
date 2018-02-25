@@ -20,8 +20,17 @@ You can install it:
 
 * Set default project for creation of *request* and *response* classes
 * Create *request* and *response* classes out of method definition, including documentation
+* Navigate to the *RequestHandler* that implements a *request* type
 
 ## Quick start
+
+### Navigate to the RequestHandler that implements a Request type
+
+1. Right click on a variable or type for a *Request* and then select **Navigate to request handler's implementation**. Alternatively, you can use the shortcut **Ctrl+F12** when the carret is over the variable or type.
+
+![Right click on the type and select Navigate to request handler's implementation](docs/imgs/gotoimplementation.png)
+
+### Generating request-response classes
 
 1. Set a default project in the solution where *request and reponse* classes are to be created in
 by right clicking on the project in the solution explorer and selecting **Commerce Runtime Handyman -> Set as default Request-Response project*** 
