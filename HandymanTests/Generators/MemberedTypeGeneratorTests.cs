@@ -18,8 +18,7 @@ namespace Handyman.Tests
         [TestMethod]
         public void GenerateSyntax_ValidCode()
         {
-            SyntaxTree tree;
-            var compilation = RoslynHelper.Compile("class X { string[] id; }", out tree);
+            var compilation = RoslynHelper.Compile("class X { string[] id; }", out SyntaxTree tree);
             var member = tree.GetRoot().DescendantNodesAndSelf().OfType<VariableDeclarationSyntax>().First();
             var symbol = (ITypeSymbol)compilation.GetSemanticModel(tree).GetTypeInfo(member.Type).Type;
 

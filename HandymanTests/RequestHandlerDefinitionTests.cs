@@ -35,8 +35,7 @@ namespace Handyman.Tests
                 }
             }";
 
-            SyntaxTree tree;
-            var compilation = RoslynHelper.Compile(code, out tree);
+            var compilation = RoslynHelper.Compile(code, out SyntaxTree tree);
             var semanticModel = compilation.GetSemanticModel(tree);
 
             var methodDeclaration = tree.GetRoot()
@@ -77,8 +76,7 @@ namespace Handyman.Tests
                 }
             }";
 
-            SyntaxTree tree;
-            var compilation = RoslynHelper.Compile(code, out tree);
+            var compilation = RoslynHelper.Compile(code, out SyntaxTree tree);
             var semanticModel = compilation.GetSemanticModel(tree);
 
             var methodDeclaration = tree.GetRoot()
@@ -113,8 +111,7 @@ namespace Handyman.Tests
                 }
             }";
 
-            SyntaxTree tree;
-            var compilation = RoslynHelper.Compile(code, out tree);
+            var compilation = RoslynHelper.Compile(code, out SyntaxTree tree);
             var semanticModel = compilation.GetSemanticModel(tree);
 
             var methodDeclaration = tree.GetRoot()
@@ -150,8 +147,7 @@ namespace Handyman.Tests
                 }
             }";
 
-            SyntaxTree tree;
-            var compilation = RoslynHelper.Compile(code, out tree);
+            var compilation = RoslynHelper.Compile(code, out SyntaxTree tree);
             var semanticModel = compilation.GetSemanticModel(tree);
 
             var methodDeclaration = tree.GetRoot()
@@ -165,7 +161,7 @@ namespace Handyman.Tests
             Assert.IsNotNull(definition);
 
             Assert.IsNotNull(definition.RequestType);
-            Assert.AreEqual("Boolean", definition.RequestType.Members.First().Type.Name);            
+            Assert.AreEqual("Boolean", definition.RequestType.Members.First().Type.Name);
 
             Assert.IsNotNull(definition.ResponseType);
             Assert.AreEqual("Int32", definition.ResponseType.Members.First().Type.Name);

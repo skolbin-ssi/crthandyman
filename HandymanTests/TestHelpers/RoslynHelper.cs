@@ -12,8 +12,8 @@ namespace Handyman.Tests.TestHelpers
 {
     public class RoslynHelper
     {
-        private static SyntaxTree[] BaseTypesSyntaxTree = ParseBaseTypes();
-        private static string RuntimePath = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
+        private static readonly SyntaxTree[] BaseTypesSyntaxTree = ParseBaseTypes();
+        private static readonly string RuntimePath = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
 
         private static readonly IEnumerable<MetadataReference> DefaultReferences =
             new MetadataReference[]
@@ -32,8 +32,7 @@ namespace Handyman.Tests.TestHelpers
 
         public static Compilation Compile(string code)
         {
-            SyntaxTree s;
-            return Compile(code, out s);
+            return Compile(code, out var _);
         }
 
         public static Compilation Compile(string code, out SyntaxTree codeSyntaxTree)
@@ -67,10 +66,8 @@ namespace Handyman.Tests.TestHelpers
 
         private static SyntaxTree ParseFile(string path)
         {
-            using (var stream = File.OpenRead(path))
-            {
-                return SyntaxFactory.ParseSyntaxTree(SourceText.From(stream, Encoding.UTF8));
-            }
+            using var stream = File.OpenRead(path);
+            return SyntaxFactory.ParseSyntaxTree(SourceText.From(stream, Encoding.UTF8));
         }
 
         private static SyntaxTree ParseText(string text)
