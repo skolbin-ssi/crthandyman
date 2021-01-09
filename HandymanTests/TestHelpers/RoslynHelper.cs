@@ -13,14 +13,16 @@ namespace Handyman.Tests.TestHelpers
     public class RoslynHelper
     {
         private static SyntaxTree[] BaseTypesSyntaxTree = ParseBaseTypes();
-        private static string RuntimePath = @"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\{0}.dll";
+        private static string RuntimePath = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
 
         private static readonly IEnumerable<MetadataReference> DefaultReferences =
-            new[]
+            new MetadataReference[]
             {
-                MetadataReference.CreateFromFile(string.Format(RuntimePath, "mscorlib")),
-                MetadataReference.CreateFromFile(string.Format(RuntimePath, "System")),
-                MetadataReference.CreateFromFile(string.Format(RuntimePath, "System.Core"))
+                MetadataReference.CreateFromFile(Path.Join(RuntimePath, "mscorlib.dll")),
+                MetadataReference.CreateFromFile(Path.Join(RuntimePath, "System.dll")),
+                MetadataReference.CreateFromFile(Path.Join(RuntimePath, "System.Runtime.dll")),
+                MetadataReference.CreateFromFile(Path.Join(RuntimePath, "System.Core.dll")),
+                MetadataReference.CreateFromFile(Path.Join(RuntimePath, typeof(Task).Assembly.GetName().Name + ".dll")),
             };
 
         private static readonly CSharpCompilationOptions DefaultCompilationOptions =
