@@ -15,7 +15,9 @@ namespace Handyman.Generators
     {
         public string GenerateSyntax(MemberedBaseType memberedType)
         {
-            return new MemberedTemplate(memberedType).TransformText();
+            // <!-- FIXME: templating for dotnetcore -->
+            throw new NotImplementedException();
+            //return new MemberedTemplate(memberedType).TransformText();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Handyman.Types
     /// </summary>
     public class RequestHandlerMethodDefinition
     {
-        private IMethodSymbol requestHandlerMethod;
+        private readonly IMethodSymbol requestHandlerMethod;
 
         public RequestHandlerMethodDefinition(RequestType requestType, ResponseType responseType, IMethodSymbol requestHandlerMethod)
         {
@@ -82,8 +82,7 @@ namespace Handyman.Types
         {
             if (type is INamedTypeSymbol)
             {
-                INamedTypeSymbol namedType = (INamedTypeSymbol)type;
-                if (namedType.IsGenericType && namedType.ToString().StartsWith("System.Threading.Tasks.Task"))
+                if (type is INamedTypeSymbol namedType && namedType.IsGenericType && namedType.ToString().StartsWith("System.Threading.Tasks.Task"))
                 {
                     return namedType.TypeArguments.First();
                 }
@@ -93,7 +92,7 @@ namespace Handyman.Types
         }
 
         private static Member CreateMemberFromParameter(IParameterSymbol parameter, DocumentationAnalyzer doc)
-        {           
+        {
             return new Member(parameter.Name, UnwrapTaskType(parameter.Type), doc.GetParameter(parameter.Name));
         }
 
