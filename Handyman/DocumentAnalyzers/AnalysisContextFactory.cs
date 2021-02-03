@@ -22,11 +22,10 @@ namespace Handyman.DocumentAnalyzers
         /// <param name="document">The document under analysis.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>An <see cref="AnalysisContext"/> for <paramref name="document"/>.</returns>
-        public async Task<AnalysisContext> CreateContextFor(Document document, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AnalysisContext> CreateContextFor(Document document, CancellationToken cancellationToken = default)
         {
             // this caches multiple uses of project (e.g. project with many documents)
-            ProjectCache projectCache = null;
-            if (!this.projects.TryGetValue(document.Project, out projectCache))            
+            if (!this.projects.TryGetValue(document.Project, out ProjectCache projectCache))
             {
                 var compilation = await document.Project.GetCompilationAsync(cancellationToken);
                 var reference = await new CommerceRuntimeReferenceAnalyzer(document.Project).Find(cancellationToken);
@@ -39,8 +38,7 @@ namespace Handyman.DocumentAnalyzers
             }
 
             // this caches multiple uses of document
-            AnalysisContext context = null;
-            if (!documents.TryGetValue(document, out context))
+            if (!documents.TryGetValue(document, out AnalysisContext context))
             {
                 context = await AnalysisContext.Create(document, cancellationToken, projectCache.CommerceRuntimeReference);
                 documents.TryAdd(document, context);

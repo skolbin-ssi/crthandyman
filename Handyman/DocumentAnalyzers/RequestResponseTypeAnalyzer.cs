@@ -22,14 +22,14 @@ namespace Handyman.DocumentAnalyzers
             this.context = context;
         }
 
-        public async Task<TypeLocation> FindImplementation(int tokenPosition, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<TypeLocation> FindImplementation(int tokenPosition, CancellationToken cancellationToken = default)
         {
             // TODO: handle class definition symbol
             SyntaxNode node = this.context.SyntaxRoot.FindToken(tokenPosition).Parent;
 
             // not always the identifier name syntax node will result in the type info directly (e.g. on a constructor statement, you need the constructor statement itself)
             // I haven't found out a deterministic way to do this, but it seems intuitive that the type information is not 'too far away' from the identifier
-            TypeInfo info;
+            TypeInfo info = default;
             for (int i = 0;
                 i < 3 && node != null && (info = this.context.SemanticModel.GetTypeInfo(node, cancellationToken)).Type == null;
                 node = node.Parent, i++) ;
@@ -48,8 +48,8 @@ namespace Handyman.DocumentAnalyzers
 
             var locations = (await SymbolFinder.FindReferencesAsync(info.Type, context.Document.Project.Solution, cancellationToken))
                 // TODO figure out when we need r.Definition.Name == info.Type.Name (HACK!!!)
-                .First(r => r.Definition.Equals(info.Type) || r.Definition.Name == info.Type.Name)?.Locations
-                    ?? Enumerable.Empty<ReferenceLocation>();            
+                .First(r => r.Definition.Equals(info.Type, SymbolEqualityComparer.Default) || r.Definition.Name == info.Type.Name)?.Locations
+                    ?? Enumerable.Empty<ReferenceLocation>();
 
             AnalysisContextFactory contextFactory = new AnalysisContextFactory();
 
@@ -84,7 +84,7 @@ namespace Handyman.DocumentAnalyzers
             // because requestLocation.TypeSymbol can be on a different compilation than info.Type
             // we cannot compare the objects directly
             string displayName = info.Type.ToDisplayString();
-            var location = requestLocations.FirstOrDefault(l => l.TypeSymbol == info.Type || l.TypeSymbol.ToDisplayString() == displayName)
+            var location = requestLocations.FirstOrDefault(l => l.TypeSymbol.Equals(info.Type, SymbolEqualityComparer.Default) || l.TypeSymbol.ToDisplayString() == displayName)
                 ?? new TypeLocation() { Location = requestHandlerAnalysisContext.SyntaxRoot.GetLocation() }; // if not found, default's to handler's location
 
             return location;

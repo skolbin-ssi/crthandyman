@@ -15,7 +15,7 @@ namespace Handyman.Comparers
     {
         public bool Equals(ITypeSymbol x, ITypeSymbol y)
         {
-            return x.Equals(y) || x.GetFullyQualifiedName().Equals(y.GetFullyQualifiedName());
+            return x.Equals(y, SymbolEqualityComparer.Default) || x.GetFullyQualifiedName().Equals(y.GetFullyQualifiedName());
         }
 
         public int GetHashCode(ITypeSymbol obj)

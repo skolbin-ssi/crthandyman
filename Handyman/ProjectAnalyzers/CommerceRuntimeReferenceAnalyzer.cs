@@ -27,7 +27,7 @@ namespace Handyman.ProjectAnalyzers
         /// Tries to find a reference for the commerce runtime.
         /// </summary>
         /// <returns>The commerce runtime reference.</returns>
-        public async Task<CommerceRuntimeReference> Find(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<CommerceRuntimeReference> Find(CancellationToken cancellationToken = default)
         {
             // TODO: it seems that the types found on different compilations (despite being idential) do not implement Equality
             // this is, CommerceRuntimeReference.RequestTypeSymbol.Equals(a request symbol from another compilation) -> false

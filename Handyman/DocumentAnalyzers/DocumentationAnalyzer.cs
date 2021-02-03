@@ -9,7 +9,7 @@ namespace Handyman.DocumentAnalyzers
 {
     public class DocumentationAnalyzer
     {
-        private XDocument doc;
+        private readonly XDocument doc;
 
         public DocumentationAnalyzer(string documentationXml)
         {

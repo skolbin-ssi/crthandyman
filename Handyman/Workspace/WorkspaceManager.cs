@@ -14,7 +14,7 @@ namespace Handyman
         private readonly Workspace workspace;
         private readonly IHostService hostServices;
 
-        private IWorkspaceSettings settings;        
+        private IWorkspaceSettings settings;
 
         public WorkspaceManager(Workspace workspace, IWorkspaceSettings settings, IHostService hostServices)
         {
@@ -27,10 +27,10 @@ namespace Handyman
         public IWorkspaceSettings Settings
         {
             get
-            {                
+            {
                 return this.settings;
             }
-            
+
             set
             {
                 this.settings = value ?? throw new ArgumentNullException(nameof(this.settings));
@@ -56,7 +56,7 @@ namespace Handyman
             if (!string.IsNullOrWhiteSpace(defaultNamespace))
             {
                 requestHandler.SetContainingNamespace(defaultNamespace);
-            }            
+            }
 
             string requestCode = generator.GenerateSyntax(requestHandler.RequestType);
             var document = this.CreateOrUpdateDocument(project, requestHandler.RequestType.Name, requestCode);
@@ -75,15 +75,15 @@ namespace Handyman
 
         private Document CreateOrUpdateDocument(Project project, string name, string documentContent)
         {
-            name = name + ".cs";
+            name += ".cs";
 
             var document = project.Documents.FirstOrDefault(d => d.Name == name);
             var text = SourceText.From(documentContent);
 
             if (document == null)
             {
-                document = project.AddDocument(name, text);                
-            }            
+                document = project.AddDocument(name, text);
+            }
             else
             {
                 document = document.WithText(text);

@@ -15,7 +15,7 @@ namespace Handyman.DocumentAnalyzers
         /// <returns>true if <see cref="type"/> is of type <paramref name="baseType"/> or is derived from it; false otherwise.</returns>
         public static bool IsDerivedFrom(this ITypeSymbol type, ITypeSymbol baseType)
         {
-            while (type != null && !type.Equals(baseType))
+            while (type != null && !type.Equals(baseType, SymbolEqualityComparer.Default))
             {
                 type = type.BaseType;
             }

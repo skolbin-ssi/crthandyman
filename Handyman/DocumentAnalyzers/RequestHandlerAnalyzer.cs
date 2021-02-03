@@ -14,7 +14,7 @@ namespace Handyman.DocumentAnalyzers
 {
     public class RequestHandlerAnalyzer
     {
-        private AnalysisContext context;
+        private readonly AnalysisContext context;
 
         public RequestHandlerAnalyzer(AnalysisContext context)
         {
@@ -29,7 +29,7 @@ namespace Handyman.DocumentAnalyzers
             {
                 var methodSymbol = (IMethodSymbol)semanticModel.GetDeclaredSymbol(methodDeclarationSyntax);
                 return RequestHandlerMethodDefinition.TryParse(methodSymbol, context.CommerceRuntimeReference);
-            }            
+            }
 
             return null;
         }
@@ -41,7 +41,7 @@ namespace Handyman.DocumentAnalyzers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="reference">The commerce runtime reference.</param>
         /// <returns>An instance of <see cref="RequestHandlerMethodDefinition"/> or null if not a request handler.</returns>
-        public RequestHandlerDefinition TryGetRequestHandlerFromSyntaxTree(TextSpan textSpan, CancellationToken cancellationToken = default(CancellationToken))
+        public RequestHandlerDefinition TryGetRequestHandlerFromSyntaxTree(TextSpan textSpan, CancellationToken cancellationToken = default)
         {
             List<MethodDeclarationSyntax> methods = new List<MethodDeclarationSyntax>();
             ClassDeclarationSyntax classNode = null;
@@ -68,14 +68,14 @@ namespace Handyman.DocumentAnalyzers
                 var supportedRequestHandlerMember = this.context.CommerceRuntimeReference.IRequestHandlerTypeSymbol.GetMembers("SupportedRequestTypes").FirstOrDefault();
 
                 if (isRequestHandler)
-                {                    
+                {
                     // now we can check what requests it implements
                     var member = classDeclaration.FindImplementationForInterfaceMember(supportedRequestHandlerMember);
 
                     // get the syntax node that declares them
                     var declaringReference = member.DeclaringSyntaxReferences.FirstOrDefault();
 
-                    IEnumerable<ITypeSymbol> declaredSupportedRequestTypes = null;
+                    IEnumerable<ITypeSymbol> declaredSupportedRequestTypes;
 
                     // WARNING: the declaring member could be in a different syntax tree than the analysis context
                     // this will happen when the property is not declared in the class itself, but on a base class, for example
@@ -110,7 +110,7 @@ namespace Handyman.DocumentAnalyzers
         public static IEnumerable<TypeLocation> FindRequestImplementationLocations(
             RequestHandlerDefinition requestHandlerDefinition,
             AnalysisContext context,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var executeInterfaceMethod = context.CommerceRuntimeReference.IRequestHandlerTypeSymbol.GetMembers("Execute").FirstOrDefault();
             var executeMethod = requestHandlerDefinition.ClassType.FindImplementationForInterfaceMember(executeInterfaceMethod);
@@ -123,7 +123,7 @@ namespace Handyman.DocumentAnalyzers
                 .Select(n => new TypeLocation() { Location = n.Item1.GetLocation(), SyntaxNode = n.Item1, TypeSymbol = n.Item2 });
         }
 
-        private static ITypeSymbol GetRequestTypeFromNode(SyntaxNode n, SemanticModel model, CommerceRuntimeReference reference, CancellationToken cancellationToken = default(CancellationToken))
+        private static ITypeSymbol GetRequestTypeFromNode(SyntaxNode n, SemanticModel model, CommerceRuntimeReference reference, CancellationToken cancellationToken = default)
         {
             if (n is IdentifierNameSyntax node)
             {
@@ -160,7 +160,7 @@ namespace Handyman.DocumentAnalyzers
                     }
                 }
             }
-            
+
             if (!foundAny && returnSyntax != null)
             {
                 // if we didn't find anything, consider return syntax node to be returning a variable and see if it points to some static value
