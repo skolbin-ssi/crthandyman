@@ -103,14 +103,12 @@ namespace CommerceRuntimeHandyman.Editor.Commands
 
             if (this.ServiceProvider.TryGetActiveWpfTextView(out view))
             {
-                var position = view.Caret.Position.BufferPosition;
-                var document = position.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
-
                 string message = string.Empty;
-                var context = await AnalysisContext.Create(document, cancellationToken);
-
                 try
                 {
+                    var position = view.Caret.Position.BufferPosition;
+                    var document = position.Snapshot.GetOpenDocumentInCurrentContextWithChanges();                    
+                    var context = await AnalysisContext.Create(document, cancellationToken);
                     var location = await new RequestResponseTypeAnalyzer(context).FindImplementation(position.Position, cancellationToken);
 
                     if (location != null)
